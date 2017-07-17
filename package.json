@@ -5,6 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "server": "./node_modules/.bin/ts-node ./server.ts",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
