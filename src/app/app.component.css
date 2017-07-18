@@ -5,6 +5,17 @@
 }
 
 main {
-    position: fixed;
-    padding-top: 150px;
+    padding-top: 50px;
+    margin: 0 auto;
+    width: 400px;
+}
+
+.course-header {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.course-header h3 {
+    text-align: center;
 }

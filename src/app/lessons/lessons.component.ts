@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {LessonsService} from "../services/lessons.service";
+import {Observable} from "rxjs/Observable";
+import {Lesson} from "../model/lesson";
 
 @Component({
   selector: 'lessons',
@@ -7,9 +10,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LessonsComponent implements OnInit {
 
-  constructor() { }
+
+  lessons$: Observable<Lesson[]>;
+
+  constructor(private lessonsService:LessonsService) { }
 
   ngOnInit() {
+
+      this.lessons$ = this.lessonsService.loadAllLessons();
   }
 
 }
