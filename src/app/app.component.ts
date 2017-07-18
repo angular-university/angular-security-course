@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-root',
@@ -9,14 +8,7 @@ import {HttpClient} from "@angular/common/http";
 export class AppComponent {
 
 
-    constructor(private http: HttpClient) {
 
-        this.http.get('/api/').subscribe(
-            val => console.log("Value received via HTTPS")
-        );
-
-
-    }
 
 
 

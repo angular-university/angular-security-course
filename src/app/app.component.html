@@ -4,19 +4,17 @@
         <li class="logo-small-container">
             <a class="v-center-block-parent">
                 <img class="v-center-block logo-small angular-university-logo"
-                     src="https://angular-academy.s3.amazonaws.com/main-logo/main-page-logo-small-hat.png"
-                     data-pin-nopin="true">
-
+                     src="https://angular-academy.s3.amazonaws.com/main-logo/main-page-logo-small-hat.png">
             </a>
         </li>
         <li>
-            <a>Lessons</a>
+            <a routerLink="/lessons">Lessons</a>
         </li>
         <li>
-            <a>Sign Up</a>
+            <a routerLink="/signup">Sign Up</a>
         </li>
         <li>
-            <a>Login</a>
+            <a routerLink="/login">Login</a>
         </li>
         <li>
             <a>Logout</a>
@@ -28,6 +26,7 @@
 
 <main>
 
+    <router-outlet></router-outlet>
 
 </main>
 
