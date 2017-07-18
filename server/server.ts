@@ -7,11 +7,13 @@ import * as https from 'https';
 
 const app: Application = express();
 
+const commandLineArgs = require('command-line-args');
 
-const server = https.createServer({
-    key: fs.readFileSync('key.pem'),
-    cert: fs.readFileSync('cert.pem')
-}, app);
+const optionDefinitions = [
+    { name: 'secure', type: Boolean,  defaultOption: true },
+];
+
+const options = commandLineArgs(optionDefinitions);
 
 
 app.get('/api/', function (req, res) {
@@ -20,7 +22,31 @@ app.get('/api/', function (req, res) {
 });
 
 
-server.listen(55555, () => console.log("Server running at https://localhost:" + server.address().port));
+
+
+
+if (options.secure) {
+
+    const httpsServer = https.createServer({
+        key: fs.readFileSync('key.pem'),
+        cert: fs.readFileSync('cert.pem')
+    }, app);
+
+    // launch an HTTPS Server
+    httpsServer.listen(9000, () => console.log("HTTPS Server running at https://localhost:" + httpsServer.address().port));
+
+}
+else {
+
+    // launch an HTTP Server
+    const httpServer = app.listen(9000, () => {
+        console.log("HTTP Server running at https://localhost:" + httpServer.address().port);
+    });
+
+}
+
+
+
 
 
 

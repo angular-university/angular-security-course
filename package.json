@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --proxy-config ./proxy.json ",
-    "start-server": "./node_modules/.bin/ts-node ./server/server.ts",
+    "start-server": "./node_modules/.bin/ts-node ./server/server.ts --secure",
     "server": "./node_modules/.bin/nodemon  -w ./server --ext \".ts\" --exec \"npm run start-server\"",
     "build": "ng build",
     "test": "ng test",
