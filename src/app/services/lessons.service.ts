@@ -17,5 +17,9 @@ export class LessonsService {
     }
 
 
+    findLessonById(id:number) {
+        return this.http.get('/api/lessons/' + id);
+    }
+
 
 }

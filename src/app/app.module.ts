@@ -8,17 +8,17 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import {RouterModule} from "@angular/router";
 import {routesConfig} from "./routes.config";
-import { LessonDetailComponent } from './lesson-detail/lesson-detail.component';
 import {LessonsService} from "./services/lessons.service";
 import {ReactiveFormsModule} from "@angular/forms";
+
+import 'rxjs/add/operator/switchMap';
 
 @NgModule({
   declarations: [
     AppComponent,
     LessonsComponent,
     LoginComponent,
-    SignupComponent,
-    LessonDetailComponent
+    SignupComponent
   ],
   imports: [
     BrowserModule,
