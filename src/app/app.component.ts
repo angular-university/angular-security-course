@@ -11,7 +11,7 @@ export class AppComponent {
 
     constructor(private http: HttpClient) {
 
-        this.http.get('/api/lessons').subscribe(
+        this.http.get('/api/').subscribe(
             val => console.log("Value received via HTTPS")
         );
 

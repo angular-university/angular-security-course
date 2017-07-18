@@ -14,7 +14,7 @@ const server = https.createServer({
 }, app);
 
 
-app.get('/', function (req, res) {
+app.get('/api/', function (req, res) {
     res.header('Content-type', 'text/html');
     return res.end('<h1>Hello, Secure World!</h1>');
 });
