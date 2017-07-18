@@ -4,6 +4,10 @@ import * as express from 'express';
 import {Application} from "express";
 import * as fs from 'fs';
 import * as https from 'https';
+import {readAllLessons} from "./read-all-lessons.route";
+import {createLesson} from "./create-lesson.route";
+import {updateLesson} from "./update-lesson.route";
+import {deleteLesson} from "./delete-lesson.route";
 
 const app: Application = express();
 
@@ -16,13 +20,14 @@ const optionDefinitions = [
 const options = commandLineArgs(optionDefinitions);
 
 
-app.get('/api/', function (req, res) {
-    res.header('Content-type', 'text/html');
-    return res.end('<h1>Hello, Secure World!</h1>');
-});
+// REST API
+app.route('/api/lessons')
+    .get(readAllLessons)
+    .post(createLesson);
 
-
-
+app.route('/api/lessons/:id')
+    .patch(updateLesson)
+    .delete(deleteLesson);
 
 
 if (options.secure) {
@@ -32,7 +37,7 @@ if (options.secure) {
         cert: fs.readFileSync('cert.pem')
     }, app);
 
-    // launch an HTTPS Server
+    // launch an HTTPS Server. Note: this does NOT mean that the application is secure
     httpsServer.listen(9000, () => console.log("HTTPS Secure Server running at https://localhost:" + httpsServer.address().port));
 
 }
