@@ -33,7 +33,7 @@ if (options.secure) {
     }, app);
 
     // launch an HTTPS Server
-    httpsServer.listen(9000, () => console.log("HTTPS Server running at https://localhost:" + httpsServer.address().port));
+    httpsServer.listen(9000, () => console.log("HTTPS Secure Server running at https://localhost:" + httpsServer.address().port));
 
 }
 else {
