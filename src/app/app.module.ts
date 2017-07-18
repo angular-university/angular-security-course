@@ -10,6 +10,7 @@ import {RouterModule} from "@angular/router";
 import {routesConfig} from "./routes.config";
 import { LessonDetailComponent } from './lesson-detail/lesson-detail.component';
 import {LessonsService} from "./services/lessons.service";
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import {LessonsService} from "./services/lessons.service";
   imports: [
     BrowserModule,
       HttpClientModule,
-      RouterModule.forRoot(routesConfig)
+      RouterModule.forRoot(routesConfig),
+      ReactiveFormsModule
   ],
   providers: [LessonsService],
   bootstrap: [AppComponent]
