@@ -15,7 +15,9 @@ class InMemoryDatabase {
 
     createUser(email:string,password:string) {
 
-        const id = this.userCounter++;
+        this.userCounter++;
+
+        const id = this.userCounter;
 
         const user: DbUser = {
             id,
