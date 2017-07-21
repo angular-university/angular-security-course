@@ -1,6 +1,7 @@
 
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
+import {Lesson} from "../model/lesson";
 
 
 @Injectable()
@@ -13,12 +14,12 @@ export class LessonsService {
 
 
     loadAllLessons() {
-        return this.http.get('/api/lessons');
+        return this.http.get<Lesson[]>('/api/lessons');
     }
 
 
     findLessonById(id:number) {
-        return this.http.get('/api/lessons/' + id);
+        return this.http.get<Lesson>('/api/lessons/' + id);
     }
 
 
