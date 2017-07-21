@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {LessonsService} from "../services/lessons.service";
 import {Observable} from "rxjs/Observable";
 import {Lesson} from "../model/lesson";
+import {User} from "../model/user";
 
 @Component({
   selector: 'lessons',
@@ -12,8 +13,13 @@ export class LessonsComponent implements OnInit {
 
 
   lessons$: Observable<Lesson[]>;
+  user$: Observable<User>;
 
-  constructor(private lessonsService:LessonsService) { }
+  constructor(
+      private lessonsService:LessonsService
+  ) {
+
+  }
 
   ngOnInit() {
 

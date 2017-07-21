@@ -10,15 +10,19 @@
         <li>
             <a routerLink="/lessons">Lessons</a>
         </li>
-        <li>
-            <a routerLink="/signup">Sign Up</a>
-        </li>
-        <li>
-            <a routerLink="/login">Login</a>
-        </li>
-        <li>
-            <a>Logout</a>
-        </li>
+
+        <ng-container *ngIf="user$ | async as user">
+            <li *ngIf="!user.id">
+                <a routerLink="/signup">Sign Up</a>
+            </li>
+            <li *ngIf="!user.id">
+                <a routerLink="/login">Login</a>
+            </li>
+            <li *ngIf="user.id">
+                <a>Logout</a>
+            </li>
+        </ng-container>
+
     </ul>
 
 </header>
