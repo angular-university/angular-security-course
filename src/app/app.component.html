@@ -1,4 +1,3 @@
-
 <header class="l-header">
     <ul class="top-menu disable-link-styles">
         <li class="logo-small-container">
@@ -7,18 +6,22 @@
                      src="https://angular-academy.s3.amazonaws.com/main-logo/main-page-logo-small-hat.png">
             </a>
         </li>
+
+
         <li>
             <a routerLink="/lessons">Lessons</a>
         </li>
-        <li>
+        <li *ngIf="isLoggedOut$ | async">
             <a routerLink="/signup">Sign Up</a>
         </li>
-        <li>
+        <li *ngIf="isLoggedOut$ | async">
             <a routerLink="/login">Login</a>
         </li>
-        <li>
+        <li *ngIf="isLoggedIn$ | async">
             <a>Logout</a>
         </li>
+
+
     </ul>
 
 </header>
