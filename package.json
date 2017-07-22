@@ -9,6 +9,7 @@
     "server": "./node_modules/.bin/nodemon  -w ./server --ext \".ts\" --exec \"npm run start-server\"",
     "hash": "node ./demos/hash.js",
     "hash-salt": "node ./demos/hash-salt.js",
+    "verify-password": "node ./demos/verify-password.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
