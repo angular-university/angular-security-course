@@ -10,6 +10,7 @@
     "hash": "node ./demos/hash.js",
     "hash-salt": "node ./demos/hash-salt.js",
     "verify-password": "node ./demos/verify-password.js",
+    "password-policy": "node ./demos/password-policy.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -34,7 +35,9 @@
     "command-line-args": "^4.0.6",
     "core-js": "^2.4.1",
     "nodemon": "^1.11.0",
+    "password-sheriff": "^1.1.0",
     "rxjs": "^5.1.0",
+    "util": "^0.10.3",
     "zone.js": "^0.8.4"
   },
   "devDependencies": {
