@@ -6,26 +6,19 @@ import {Request, Response} from "express";
 import {db} from "./database";
 import {USERS} from "./database-data";
 import * as argon2 from 'argon2';
+import {validatePassword} from "./password-policy";
 
-const PasswordPolicy = require('password-sheriff').PasswordPolicy;
-var charsets = require('password-sheriff').charsets;
 
-const policy = new PasswordPolicy({
-    length: {
-        minLength: 10
-    },
-    contains: {
-        expressions: [charsets.upperCase, charsets.numbers]
-    }
-});
 
 
 export function createUser(req: Request, res:Response) {
 
     const credentials = req.body;
 
-    if (!policy.check(credentials.password)) {
-        res.status(500).send();
+    const errors = validatePassword(credentials.password);
+
+    if (errors.length > 0) {
+        res.status(500).json({errors});
     }
     else {
         argon2.hash(credentials.password)

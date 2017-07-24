@@ -1,59 +1,24 @@
+var passwordValidator = require('password-validator');
 
-var util = require('util');
+// Create a schema
+var schema = new passwordValidator();
 
-const PasswordPolicy = require('password-sheriff').PasswordPolicy;
-const charsets = require('password-sheriff').charsets;
+// Add properties to it
+schema
+    .is().min(8)                                    // Minimum length 8
+    .is().max(100)                                  // Maximum length 100
+    .has().uppercase()                              // Must have uppercase letters
+    .has().lowercase()                              // Must have lowercase letters
+    .has().digits()                                 // Must have digits
+    .has().not().spaces()                           // Should not have spaces
+    .is().not().oneOf(['Passw0rd', 'Password123']); // Blacklist these values
 
-const policy = new PasswordPolicy({
-    length: {
-        minLength: 10
-    },
-    contains: {
-        expressions: [charsets.upperCase, charsets.numbers]
-    }
-});
+// Validate against a password string
+console.log(schema.validate('validPASS123'));
+// => true
+console.log(schema.validate('invalidPASS'));
+// => false
 
-
-const explained = policy.explain();
-
-const lengthExplained = explained[0];
-const charsExplained = explained[1];
-
-
-var passwords = [
-    'password',
-    'password1',
-    'Password1',
-    'Password10',
-    'password10'
-];
-
-
-passwords.forEach(function(password) {
-
-    if (!policy.check(password)) {
-        console.log('\nPassword ' + password + ' is not a valid password');
-
-        const missing = policy.missing({}, password);
-
-        console.log(missing.rules.map(generateErrorMessage));
-    }
-    else {
-        console.log('Password ' + password + ' IS VALID!');
-    }
-
-});
-
-
-
-function generateErrorMessage(error) {
-    if (error.code === 'lengthAtLeast') {
-        return util.format(error.message, error.format[0]);
-    }
-    else if (error.code === "shouldContain") {
-        return error.message + " " + error.items
-                                        .filter(function(item) {return !item.verified})
-                                        .map(function(item) {return item.message})
-                                        .join(", ");
-    }
-}
+// Get a full list of rules which failed
+console.log(schema.validate('joke', { list: true }));
+// => [ 'min', 'uppercase', 'digits' ]

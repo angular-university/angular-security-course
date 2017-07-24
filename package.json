@@ -36,6 +36,7 @@
     "core-js": "^2.4.1",
     "nodemon": "^1.11.0",
     "password-sheriff": "^1.1.0",
+    "password-validator": "^4.0.0",
     "rxjs": "^5.1.0",
     "util": "^0.10.3",
     "zone.js": "^0.8.4"
