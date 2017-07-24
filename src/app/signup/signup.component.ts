@@ -11,6 +11,15 @@ export class SignupComponent implements OnInit {
 
     form:FormGroup;
 
+    errors:string[] = [];
+
+    messagePerErrorCode = {
+        min: 'The minimum length is 10 characters',
+        uppercase: 'At least one upper case character',
+        digits: 'At least one numeric character',
+    };
+
+
     constructor(private fb: FormBuilder, private authService: AuthService) {
 
         this.form = this.fb.group({
@@ -35,7 +44,7 @@ export class SignupComponent implements OnInit {
             this.authService.signUp(val.email, val.password)
                 .subscribe(
                     () => console.log("User created successfully"),
-                    console.error
+                    response => this.errors = response.error.errors
                 );
 
         }
