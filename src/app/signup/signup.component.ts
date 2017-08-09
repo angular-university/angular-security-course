@@ -18,6 +18,7 @@ export class SignupComponent implements OnInit {
         min: 'The minimum length is 10 characters',
         uppercase: 'At least one upper case character',
         digits: 'At least one numeric character',
+        "err_user": 'Could not create user'
     };
 
 

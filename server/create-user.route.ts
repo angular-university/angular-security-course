@@ -22,7 +22,8 @@ export function createUser(req: Request, res: Response) {
     }
     else {
 
-        createUserAndSession(res, credentials);
+        createUserAndSession(res, credentials)
+            .catch(err => res.status(500).json({errors: ["err_user"]}));
 
     }
 
