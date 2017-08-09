@@ -11,13 +11,14 @@ import {routesConfig} from "./routes.config";
 import {LessonsService} from "./services/lessons.service";
 import {ReactiveFormsModule} from "@angular/forms";
 
+import {AuthService} from "./services/auth.service";
+import {CookieModule} from "ngx-cookie";
+
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/shareReplay';
 import 'rxjs/add/operator/do';
-
-import {AuthService} from "./services/auth.service";
-
+import 'rxjs/add/operator/filter';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import {AuthService} from "./services/auth.service";
     BrowserModule,
       HttpClientModule,
       RouterModule.forRoot(routesConfig),
-      ReactiveFormsModule
+      ReactiveFormsModule,
+      CookieModule.forRoot()
   ],
   providers: [LessonsService, AuthService],
   bootstrap: [AppComponent]

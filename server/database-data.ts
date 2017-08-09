@@ -5,6 +5,9 @@ import {DbUser} from "./db-user";
 export const USERS: {[key:number]:DbUser} = {};
 
 
+export const SESSIONS: {[key:number]: number} = {};
+
+
 export const LESSONS = {
 
     1: {

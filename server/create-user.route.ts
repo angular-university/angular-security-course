@@ -3,7 +3,6 @@ import {db} from "./database";
 import {USERS} from "./database-data";
 import * as argon2 from 'argon2';
 import {validatePassword} from "./password-validation";
-import {AUTH_COOKIE_NAME} from "./constants";
 
 const util = require('util');
 const crypto = require('crypto');
@@ -39,11 +38,11 @@ async function createUserAndSession(res: Response, credentials) {
 
     console.log("passwordDigest", passwordDigest);
 
-    const user = db.createUser(credentials.email, passwordDigest);
+    const user = db.createUser(credentials.email, passwordDigest, sessionId);
 
     console.log(USERS);
 
-    res.cookie(AUTH_COOKIE_NAME, sessionId, {httpOnly: true, secure: true});
+    res.cookie("SESSIONID", sessionId, {httpOnly: true, secure: true});
 
     res.status(200).json({id: user.id, email: user.email});
 

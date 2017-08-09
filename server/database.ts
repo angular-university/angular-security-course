@@ -1,7 +1,8 @@
 
 import * as _ from 'lodash';
-import {LESSONS, USERS} from "./database-data";
+import {LESSONS, SESSIONS, USERS} from "./database-data";
 import {DbUser} from "./db-user";
+import {User} from "../src/app/model/user";
 
 
 class InMemoryDatabase {
@@ -13,7 +14,7 @@ class InMemoryDatabase {
     }
 
 
-    createUser(email:string,passwordDigest:string) {
+    createUser(email:string,passwordDigest:string, sessionId:string) {
 
         const usersPerEmail = _.keyBy( _.values(USERS), "email" );
 
@@ -34,6 +35,22 @@ class InMemoryDatabase {
         };
 
         USERS[id] = user;
+
+        SESSIONS[sessionId] = id;
+
+        return user;
+    }
+
+
+    findUserbySession(sessionId:string) : User {
+
+        let user;
+
+        const userId = SESSIONS[sessionId];
+
+        if (userId) {
+            user = {id: userId, email: USERS[userId].email};
+        }
 
         return user;
     }

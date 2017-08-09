@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
 import {User} from "../model/user";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
+import {CookieService} from "ngx-cookie";
 
 export const ANONYMOUS_USER : User = {
     id: undefined,
@@ -13,26 +14,36 @@ export const ANONYMOUS_USER : User = {
 @Injectable()
 export class AuthService {
 
-   private subject = new BehaviorSubject<User>(ANONYMOUS_USER);
+   private subject = new BehaviorSubject<User>(undefined);
 
-   user$: Observable<User> = this.subject.asObservable();
+   user$: Observable<User> = this.subject.asObservable().filter(user => !!user);
 
-   isLoggedIn$: Observable<boolean> = this.user$.map(user => !!user.id);
+    isLoggedIn$: Observable<boolean> = this.user$.map(user => !!user.id);
 
-   isLoggedOut$: Observable<boolean> = this.isLoggedIn$.map(isLoggedIn => !isLoggedIn);
+    isLoggedOut$: Observable<boolean> = this.isLoggedIn$.map(isLoggedIn => !isLoggedIn);
 
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private cookieService: CookieService) {
 
+      http.get<User>('/api/user')
+          .subscribe(user => this.subject.next(user ? user: ANONYMOUS_USER));
 
   }
 
 
   signUp(email:string, password:string ) {
-
       return this.http.post<User>('/api/signup', {email, password})
           .shareReplay()
           .do(user => this.subject.next(user));
+  }
+
+
+
+  logout() {
+
+      this.cookieService.remove('SESSIONID');
+
+      this.subject.next(ANONYMOUS_USER);
 
   }
 

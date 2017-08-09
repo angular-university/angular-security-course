@@ -17,7 +17,7 @@
         <li *ngIf="isLoggedOut$ | async">
             <a routerLink="/login">Login</a>
         </li>
-        <li *ngIf="isLoggedIn$ | async">
+        <li *ngIf="isLoggedIn$ | async" (click)="logout()">
             <a>Logout</a>
         </li>
 
