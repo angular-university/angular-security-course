@@ -6,8 +6,11 @@ import * as fs from 'fs';
 import * as https from 'https';
 import {readAllLessons} from "./read-all-lessons.route";
 
+const bodyParser = require('body-parser');
 
 const app: Application = express();
+
+app.use(bodyParser.json());
 
 const commandLineArgs = require('command-line-args');
 
