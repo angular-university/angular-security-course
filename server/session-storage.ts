@@ -17,13 +17,9 @@ class Session {
         public user:User) {
 
         this.validUntil = moment().add(Session.VALIDITY_MINUTES, 'minutes');
-
     }
 
     isValid() {
-
-        console.log("diff", moment().diff(this.validUntil, 'minutes') );
-
         return moment().diff(this.validUntil, 'minutes') <= 0;
     }
 

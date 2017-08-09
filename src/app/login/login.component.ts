@@ -11,7 +11,7 @@ export class LoginComponent implements OnInit {
 
     form:FormGroup;
 
-    constructor(private fb:FormBuilder, private authService:AuthService) {
+    constructor(private fb:FormBuilder, private authService: AuthService) {
 
         this.form = this.fb.group({
             email: ['',Validators.required],
@@ -21,6 +21,8 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit() {
+
+
 
     }
 

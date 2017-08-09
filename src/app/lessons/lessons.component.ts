@@ -10,14 +10,14 @@ import {Lesson} from "../model/lesson";
 })
 export class LessonsComponent implements OnInit {
 
-
   lessons$: Observable<Lesson[]>;
 
-  constructor(private lessonsService:LessonsService) { }
+  constructor(private lessonsService:LessonsService) {
+
+  }
 
   ngOnInit() {
-
-      this.lessons$ = this.lessonsService.loadAllLessons();
+      this.lessons$ = this.lessonsService.loadAllLessons().catch(err => Observable.of([]));
   }
 
 }
