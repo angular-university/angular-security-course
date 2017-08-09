@@ -21,12 +21,10 @@ export class AuthService {
 
     isLoggedOut$: Observable<boolean> = this.isLoggedIn$.map(isLoggedIn => !isLoggedIn);
 
-
     constructor(private http: HttpClient) {
         http.get<User>('/api/user')
             .subscribe(user => this.subject.next(user ? user : ANONYMOUS_USER));
     }
-
 
     signUp(email: string, password: string) {
         return this.http.post<User>('/api/signup', {email, password})
@@ -34,13 +32,11 @@ export class AuthService {
             .do(user => this.subject.next(user));
     }
 
-
     logout(): Observable<any> {
         return this.http.post('/api/logout', null)
             .shareReplay()
             .do(user => this.subject.next(ANONYMOUS_USER));
     }
-
 
 }
 

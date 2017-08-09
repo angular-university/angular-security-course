@@ -48,11 +48,19 @@ class SessionStore {
 
     findUserbySession(sessionId:string) : User {
 
+        const isSessionValid = this.isSessionValid(sessionId);
+
+        return isSessionValid ? this.sessions[sessionId].user : undefined;
+    }
+
+    isSessionValid(sessionId:string) {
+
         const session = this.sessions[sessionId];
 
         const isSessionValid = session && session.isValid();
 
         return isSessionValid ? session.user : undefined;
+
     }
 
 }
