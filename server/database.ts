@@ -2,7 +2,6 @@
 import * as _ from 'lodash';
 import {LESSONS, USERS} from "./database-data";
 import {DbUser} from "./db-user";
-import {User} from "../src/app/model/user";
 
 
 class InMemoryDatabase {
@@ -12,7 +11,6 @@ class InMemoryDatabase {
     readAllLessons() {
         return _.values(LESSONS);
     }
-
 
     createUser(email:string,passwordDigest:string) {
 
@@ -36,11 +34,24 @@ class InMemoryDatabase {
 
         USERS[id] = user;
 
+        console.log(USERS);
+
         return user;
     }
 
 
+    findUserByEmail(email:string) :DbUser {
+
+        const users = _.values(USERS);
+
+        return _.find(users, user => user.email === email);
+    }
 
 }
 
+
+
+
 export const db = new InMemoryDatabase();
+
+

@@ -4,11 +4,8 @@ import {USERS} from "./database-data";
 import * as argon2 from 'argon2';
 import {validatePassword} from "./password-validation";
 import {sessionStore} from "./session-storage";
+import {initializeUserSession, randomBytes} from "./security.utils";
 
-const util = require('util');
-const crypto = require('crypto');
-
-const randomBytes = util.promisify(crypto.randomBytes);
 
 
 export function createUser(req: Request, res: Response) {
@@ -31,23 +28,13 @@ export function createUser(req: Request, res: Response) {
 
 async function createUserAndSession(res: Response, credentials) {
 
-    const sessionId = await randomBytes(32).then(bytes => bytes.toString('hex'));
-
-    console.log("sessionId", sessionId);
-
     const passwordDigest = await argon2.hash(credentials.password);
 
     console.log("passwordDigest", passwordDigest);
 
     const user = db.createUser(credentials.email, passwordDigest);
 
-    sessionStore.createSession(sessionId, user);
-
-    console.log(USERS);
-
-    res.cookie("SESSIONID", sessionId, {httpOnly: true, secure: true});
-
-    res.status(200).json({id: user.id, email: user.email});
+    return initializeUserSession(user, res);
 
 }
 

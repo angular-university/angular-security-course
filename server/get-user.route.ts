@@ -17,8 +17,4 @@ export function getUser(req:Request, res:Response) {
         res.sendStatus(204);
     }
 
-
-
-
-
 }
