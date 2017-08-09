@@ -1,6 +1,6 @@
 
 import {Request, Response} from "express";
-import {db} from "./database";
+import {sessionStore} from "./session-storage";
 
 
 
@@ -8,7 +8,7 @@ export function getUser(req:Request, res:Response) {
 
     const sessionId = req.cookies['SESSIONID'];
 
-    const user = db.findUserbySession(sessionId);
+    const user = sessionStore.findUserbySession(sessionId);
 
     if (user) {
         res.status(200).send(user);

@@ -12,7 +12,6 @@ import {LessonsService} from "./services/lessons.service";
 import {ReactiveFormsModule} from "@angular/forms";
 
 import {AuthService} from "./services/auth.service";
-import {CookieModule} from "ngx-cookie";
 
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/map';
@@ -32,8 +31,7 @@ import 'rxjs/add/operator/filter';
     BrowserModule,
       HttpClientModule,
       RouterModule.forRoot(routesConfig),
-      ReactiveFormsModule,
-      CookieModule.forRoot()
+      ReactiveFormsModule
   ],
   providers: [LessonsService, AuthService],
   bootstrap: [AppComponent]
