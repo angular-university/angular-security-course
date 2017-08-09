@@ -41,7 +41,7 @@ async function createUserAndSession(res: Response, credentials) {
 
     const user = db.createUser(credentials.email, passwordDigest);
 
-    sessionStore.createSession(sessionId, user.id);
+    sessionStore.createSession(sessionId, user);
 
     console.log(USERS);
 
