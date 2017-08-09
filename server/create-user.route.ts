@@ -1,16 +1,17 @@
-
-
-
-
 import {Request, Response} from "express";
 import {db} from "./database";
 import {USERS} from "./database-data";
 import * as argon2 from 'argon2';
 import {validatePassword} from "./password-validation";
+import {AUTH_COOKIE_NAME} from "./constants";
+
+const util = require('util');
+const crypto = require('crypto');
+
+const randomBytes = util.promisify(crypto.randomBytes);
 
 
-
-export function createUser(req: Request, res:Response) {
+export function createUser(req: Request, res: Response) {
 
     const credentials = req.body;
 
@@ -20,18 +21,31 @@ export function createUser(req: Request, res:Response) {
         res.status(400).json({errors});
     }
     else {
-        argon2.hash(credentials.password)
-            .then(passwordDigest => {
 
-                const user = db.createUser(credentials.email, passwordDigest);
+        createUserAndSession(res, credentials);
 
-                console.log(USERS);
-
-                res.status(200).json({id:user.id, email:user.email});
-
-            });
     }
 
+}
 
+async function createUserAndSession(res: Response, credentials) {
+
+    const sessionId = await randomBytes(32).then(bytes => bytes.toString('hex'));
+
+    console.log("sessionId", sessionId);
+
+    const passwordDigest = await argon2.hash(credentials.password);
+
+    console.log("passwordDigest", passwordDigest);
+
+    const user = db.createUser(credentials.email, passwordDigest);
+
+    console.log(USERS);
+
+    res.cookie(AUTH_COOKIE_NAME, sessionId, {httpOnly: true, secure: true});
+
+    res.status(200).json({id: user.id, email: user.email});
 
 }
+
+

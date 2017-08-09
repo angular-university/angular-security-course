@@ -2,9 +2,12 @@
   "name": "angular-security-course",
   "version": "0.0.0",
   "license": "MIT",
+  "notes": {
+    "extra-cli-options": "--ssl 1 --ssl-key key.pem --ssl-cert cert.pem"
+  },
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --proxy-config ./proxy.json ",
+    "start": "ng serve --proxy-config ./proxy.json --ssl 1 --ssl-key key.pem --ssl-cert cert.pem",
     "start-server": "./node_modules/.bin/ts-node ./server/server.ts --secure",
     "server": "./node_modules/.bin/nodemon  -w ./server --ext \".ts\" --exec \"npm run start-server\"",
     "hash": "node ./demos/hash.js",
@@ -32,6 +35,7 @@
     "argon2-ffi": "^1.0.1",
     "body-parser": "^1.17.2",
     "command-line-args": "^4.0.6",
+    "cookie-parser": "^1.4.3",
     "core-js": "^2.4.1",
     "nodemon": "^1.11.0",
     "password-validator": "^4.0.0",
