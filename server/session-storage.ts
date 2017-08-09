@@ -8,17 +8,23 @@ import {Moment} from "moment";
 
 class Session {
 
-    static readonly VALIDITY_MINUTES = 60;
+    static readonly VALIDITY_MINUTES = 2;
+
+    private validUntil: Moment;
 
     constructor(
         public  sessionId:string,
-        public user:User,
-        public validUntil: Moment) {
+        public user:User) {
+
+        this.validUntil = moment().add(Session.VALIDITY_MINUTES, 'minutes');
 
     }
 
     isValid() {
-        return moment().diff(this.validUntil, 'minutes') < Session.VALIDITY_MINUTES;
+
+        console.log("diff", moment().diff(this.validUntil, 'minutes') );
+
+        return moment().diff(this.validUntil, 'minutes') <= 0;
     }
 
 }
@@ -31,8 +37,7 @@ class SessionStore {
     createSession(sessionId:string, user: User) {
         this.sessions[sessionId] = new Session(
             sessionId,
-            user,
-            moment().add(1, 'hours')
+            user
         );
     }
 
