@@ -22,7 +22,7 @@ export class SignupComponent implements OnInit {
     };
 
 
-    constructor(private fb: FormBuilder, private authService: AuthService, private router:Router) {
+    constructor(private fb: FormBuilder, private authService: AuthService) {
         this.form = this.fb.group({
             email: ['',Validators.required],
             password: ['',Validators.required],
@@ -43,12 +43,7 @@ export class SignupComponent implements OnInit {
 
             this.authService.signUp(val.email, val.password)
                 .subscribe(
-                    () => {
-                        console.log("User created successfully");
-
-                        this.router.navigateByUrl('/');
-
-                    },
+                    () => console.log("User created successfully"),
                     response => this.errors = response.error.errors
                 );
 
