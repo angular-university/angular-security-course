@@ -11,6 +11,15 @@ class SessionStore {
         this.sessions[sessionId] = new Session(sessionId, user);
     }
 
+    findUserBySessionId(sessionId:string): User | undefined {
+
+        const session = this.sessions[sessionId];
+
+        const isSessionValid = session && session.isValid();
+
+        return isSessionValid ? session.user : undefined;
+    }
+
 }
 
 
