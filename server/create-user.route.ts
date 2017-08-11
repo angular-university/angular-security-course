@@ -38,7 +38,7 @@ async function createUserAndSession(res:Response, credentials) {
 
     sessionStore.createSession(sessionId, user);
 
-    res.cookie("SESSIONID", sessionId);
+    res.cookie("SESSIONID", sessionId, {httpOnly:true, secure:true});
 
     res.status(200).json({id:user.id, email:user.email});
 }
