@@ -8,6 +8,7 @@ import {readAllLessons} from "./read-all-lessons.route";
 import {createUser} from "./create-user.route";
 import {getUser} from "./get-user.route";
 import {logout} from "./logout.route";
+import {login} from "./login.route";
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 
@@ -38,6 +39,9 @@ app.route('/api/user')
 
 app.route('/api/logout')
     .post(logout);
+
+app.route('/api/login')
+    .post(login);
 
 
 if (options.secure) {
