@@ -6,15 +6,14 @@ var jwt = require('jsonwebtoken');
 var secretKey = 'secret-key';
 
 var payload = {
-  userId: 1
+  name: 'Alice'
 };
 
 
 // create a JWT
-var newToken = jwt.sign({
-    algorithm: 'HS256',
-    data: payload
-}, secretKey);
+var newToken = jwt.sign(payload, secretKey, {
+    algorithm: 'HS256'
+});
 
 console.log("JWT created:", newToken);
 

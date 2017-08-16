@@ -3,14 +3,14 @@ var jwt = require('jsonwebtoken');
 
 
 // verify an existing JWT
-var existingToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhbGdvcml0aG0iOiJIUzI1NiIsImRhdGEiOnsidXNlcklkIjoxfSwiaWF0IjoxNTAyODgxOTIxfQ.6ayBjYiaTMJ8Z3tYx6VfueFLDN1U8SFl94B7U3ZWO6Q';
+var existingToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiQWxpY2UiLCJpYXQiOjE1MDI4ODkxOTF9._tPQtlZz2GhXHXATn5W09K4XCG0Z5LyEQqikJf3qXF8';
 
 
 var secretKey = 'secret-key';
 
 
 
-const verify = jwt.verify(existingToken, secretKey, {algorithm: 'HS256' });
+const verify = jwt.verify(existingToken, secretKey);
 
 
 console.log("Decoded JWT:", verify);

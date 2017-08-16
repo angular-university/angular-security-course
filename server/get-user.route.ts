@@ -6,10 +6,10 @@ import {Request, Response} from "express";
 
 export function getUser(req:Request, res:Response) {
 
-    const sessionId = req.cookies['SESSIONID'];
+    const userId = req.cookies['SESSIONID'];
 
     //TODO
-    const user = {};
+    const user = {email:'test@gmail.com'};
 
 
     if (user) {
