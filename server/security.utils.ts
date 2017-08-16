@@ -34,8 +34,6 @@ export async function createSessionToken(userId:number) {
 
 export async function isSessionTokenValid(sessionToken:string) {
 
-    console.log("validating token", sessionToken);
-
     const  verify = await jwt.verify(sessionToken, RSA_PUBLIC_KEY);
 
     console.log("decoded token", verify);

@@ -2,6 +2,7 @@ import {Request, Response, NextFunction} from 'express';
 import {isSessionTokenValid} from "./security.utils";
 
 
+
 export function retrieveUserIdFromRequest(req: Request, res: Response, next: NextFunction) {
 
     const jwt = req.cookies['SESSIONID'];
@@ -14,12 +15,12 @@ export function retrieveUserIdFromRequest(req: Request, res: Response, next: Nex
     }
 }
 
+
+
 async function handleSessionCookie(jwt, req: Request, next: NextFunction) {
     try {
 
         const token = await isSessionTokenValid(jwt);
-
-        console.log("decoded token", token);
 
         req['userId'] = token.sub;
 
@@ -33,10 +34,12 @@ async function handleSessionCookie(jwt, req: Request, next: NextFunction) {
 }
 
 
+
 export function checkIfAuthenticated(req: Request, res: Response, next: NextFunction) {
-
-    console.log("Calling check if authenticated ...");
-
-    next();
-
+    if (req["userId"]) {
+        next();
+    }
+    else {
+        res.sendStatus(403);
+    }
 }

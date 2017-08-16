@@ -47,6 +47,25 @@ class InMemoryDatabase {
         return _.find(users, user => user.email === email);
     }
 
+    findUserById(userId:string) :DbUser {
+
+        let user = undefined;
+
+        if (userId) {
+
+            console.log("looking for userId ", userId);
+
+            const users = _.values(USERS);
+
+            user = _.find(users, user => user.id.toString() === userId);
+
+            console.log("user data found:", user);
+        }
+
+        return user;
+
+    }
+
 }
 
 

@@ -38,7 +38,7 @@ app.route('/api/signup')
     .post(createUser);
 
 app.route('/api/user')
-    .get(checkIfAuthenticated, getUser);
+    .get(getUser);
 
 app.route('/api/logout')
     .post(checkIfAuthenticated, logout);
