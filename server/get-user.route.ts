@@ -1,7 +1,6 @@
 
 
 import {Request, Response} from "express";
-import {sessionStore} from "./session-store";
 
 
 
@@ -9,7 +8,8 @@ export function getUser(req:Request, res:Response) {
 
     const sessionId = req.cookies['SESSIONID'];
 
-    const user = sessionStore.findUserBySessionId(sessionId);
+    //TODO
+    const user = {};
 
 
     if (user) {

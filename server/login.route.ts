@@ -5,8 +5,7 @@ import {db} from "./database";
 import * as argon2 from 'argon2';
 import {User} from "../src/app/model/user";
 import {DbUser} from "./db-user";
-import {randomBytes} from "./security.utils";
-import {sessionStore} from "./session-store";
+import {createSessionToken, randomBytes} from "./security.utils";
 
 
 
@@ -29,11 +28,11 @@ async function loginAndBuildResponse(credentials:any, user:DbUser,  res: Respons
 
     try {
 
-        const sessionId = await attemptLogin(credentials, user);
+        const sessionToken = await attemptLogin(credentials, user);
 
         console.log("Login successful");
 
-        res.cookie("SESSIONID", sessionId, {httpOnly:true, secure:true});
+        res.cookie("SESSIONID", sessionToken, {httpOnly:true, secure:true});
 
         res.status(200).json({id:user.id, email:user.email});
 
@@ -58,13 +57,7 @@ async function attemptLogin(credentials:any, user:DbUser) {
         throw new Error("Password Invalid");
     }
 
-    const sessionId = await randomBytes(32).then(bytes => bytes.toString('hex'));
-
-    console.log("sessionId",sessionId );
-
-    sessionStore.createSession(sessionId, user);
-
-    return sessionId;
+    return createSessionToken(user.id);
 }
 
 

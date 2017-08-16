@@ -1,13 +1,13 @@
 
 import {db} from "./database";
-import {sessionStore} from "./session-store";
 
 
 export function readAllLessons(req, res) {
 
     const sessionId = req.cookies["SESSIONID"];
 
-    const isSessionValid = sessionStore.isSessionValid(sessionId);
+    //TODO
+    const isSessionValid = true;
 
     if (!isSessionValid) {
         res.sendStatus(403);
