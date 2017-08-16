@@ -1,24 +1,21 @@
 
-console.log(" JWT example using HMAC SHA256");
-
 var jwt = require('jsonwebtoken');
+var fs = require('fs');
 
 
-
-var privateKey = 'private-key';
-
-
-
+var privateKey = fs.readFileSync('./demos/private.key');
 
 var payload = {
   email: 'test@mailinator.com'
 };
 
 
-var token = jwt.sign(payload, secretKey, {algorithm: 'RS256' });
+var token = jwt.sign(payload, privateKey, {algorithm: 'RS256' });
 
 
-console.log(token);
+console.log('RSA 256 JWT', token);
+
+
 
 
 

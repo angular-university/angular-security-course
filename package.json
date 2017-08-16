@@ -15,6 +15,8 @@
     "verify-password": "node ./demos/verify-password.js",
     "jwt-hs256": "node ./demos/jwt-hs256.js",
     "jwt-check-hs256": "node ./demos/jwt-check-hs256.js",
+    "jwt-rs256": "node ./demos/jwt-rs256.js",
+    "jwt-check-rs256": "node ./demos/jwt-check-rs256.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
