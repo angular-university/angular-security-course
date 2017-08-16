@@ -43,6 +43,4 @@ async function createUserAndSession(res:Response, credentials) {
 
 
 
-// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhbGdvcml0aG0iOiJSUzI1NiIsImV4cCI6MTUwMjg4NTI4My4wMzEsInN1YmplY3QiOjEsImlhdCI6MTUwMjg4NTE2M30.BfdcIp8RY97W0Fzznbx0efQdWT2_YropraA5ofKUXPQ
-
 
