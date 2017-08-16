@@ -5,7 +5,7 @@ import {db} from "./database";
 import * as argon2 from 'argon2';
 import {User} from "../src/app/model/user";
 import {DbUser} from "./db-user";
-import {createSessionToken, randomBytes} from "./security.utils";
+import {createCsrfToken, createSessionToken, randomBytes} from "./security.utils";
 
 
 
@@ -32,7 +32,11 @@ async function loginAndBuildResponse(credentials:any, user:DbUser,  res: Respons
 
         console.log("Login successful");
 
+        const csrfToken = createCsrfToken();
+
         res.cookie("SESSIONID", sessionToken, {httpOnly:true, secure:true});
+
+        res.cookie("CSRF-TOKEN", csrfToken);
 
         res.status(200).json({id:user.id, email:user.email});
 
