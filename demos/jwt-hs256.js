@@ -1,5 +1,5 @@
 
-console.log(" JWT example using HMAC SHA256");
+console.log(" Create JWT example using HMAC SHA256");
 
 var jwt = require('jsonwebtoken');
 
@@ -12,10 +12,13 @@ var payload = {
 };
 
 
-var token = jwt.sign(payload, secretKey, {algorithm: 'HS256' });
+// create a JWT
+var newToken = jwt.sign(payload, secretKey, {algorithm: 'HS256' });
+
+console.log("JWT created:", newtoken);
 
 
-console.log(token);
+
 
 
 

@@ -14,6 +14,7 @@
     "hash-salt": "node ./demos/hash-salt.js",
     "verify-password": "node ./demos/verify-password.js",
     "jwt-hs256": "node ./demos/jwt-hs256.js",
+    "jwt-check-hs256": "node ./demos/jwt-check-hs256.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
