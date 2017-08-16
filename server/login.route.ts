@@ -40,14 +40,12 @@ async function loginAndBuildResponse(credentials:any, user:DbUser,  res: Respons
 
         res.status(200).json({id:user.id, email:user.email});
 
-
     }
     catch(err) {
 
         console.log("Login failed!");
 
         res.sendStatus(403);
-
     }
 }
 
