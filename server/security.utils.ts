@@ -30,6 +30,20 @@ export async function createSessionToken(userId:string) {
 }
 
 
+export async function decodeJwt(token:string) {
+
+    const payload = await jwt.verify(token, RSA_PUBLIC_KEY);
+
+    console.log("decoded JWT payload", payload);
+
+    return payload;
+}
+
+
+
+
+
+
 
 
 
