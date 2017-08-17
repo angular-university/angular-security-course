@@ -26,6 +26,9 @@ export class AuthService {
             .subscribe(user => this.subject.next(user ? user : ANONYMOUS_USER));
     }
 
+
+
+
     signUp(email:string, password:string ) {
 
         return this.http.post<User>('/api/signup', {email, password})

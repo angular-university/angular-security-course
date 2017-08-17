@@ -1,8 +1,8 @@
 
 
 
-import {Request, Response, NextFunction} from 'express';
 import {decodeJwt} from "./security.utils";
+import {Request, Response, NextFunction} from 'express';
 
 
 export function retrieveUserIdFromRequest(req: Request, res: Response, next: NextFunction) {
@@ -16,6 +16,9 @@ export function retrieveUserIdFromRequest(req: Request, res: Response, next: Nex
                 console.error(err);
                 next();
         })
+    }
+    else {
+      next();
     }
 }
 

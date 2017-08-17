@@ -10,6 +10,7 @@ import {getUser} from "./get-user.route";
 import {logout} from "./logout.route";
 import {login} from "./login.route";
 import {retrieveUserIdFromRequest} from "./get-user.middleware";
+import {checkIfAuthenticated} from "./auth.middleware";
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 
@@ -29,10 +30,9 @@ const optionDefinitions = [
 
 const options = commandLineArgs(optionDefinitions);
 
-
 // REST API
 app.route('/api/lessons')
-    .get(readAllLessons);
+    .get(checkIfAuthenticated, readAllLessons);
 
 app.route('/api/signup')
     .post(createUser);
@@ -41,7 +41,7 @@ app.route('/api/user')
     .get(getUser);
 
 app.route('/api/logout')
-    .post( logout);
+    .post(checkIfAuthenticated, logout);
 
 app.route('/api/login')
     .post(login);
