@@ -4,7 +4,7 @@ import {db} from "./database";
 import * as argon2 from 'argon2';
 import {validatePassword} from "./password-validation";
 import moment = require("moment");
-import {createSessionToken} from "./security.utils";
+import {createCsrfToken, createSessionToken} from "./security.utils";
 
 
 
@@ -20,7 +20,8 @@ export function createUser(req: Request, res:Response) {
     }
     else {
 
-        createUserAndSession(res, credentials);
+        createUserAndSession(res, credentials)
+            .catch(() => {res.sendStatus(500)});
 
     }
 
@@ -34,7 +35,11 @@ async function createUserAndSession(res:Response, credentials) {
 
     const sessionToken = await createSessionToken(user.id.toString());
 
+    const csrfToken = await createCsrfToken(sessionToken);
+
     res.cookie("SESSIONID", sessionToken, {httpOnly:true, secure:true});
+
+    res.cookie("XSRF-TOKEN", csrfToken);
 
     res.status(200).json({id:user.id, email:user.email});
 }
