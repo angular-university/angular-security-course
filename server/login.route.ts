@@ -4,6 +4,7 @@ import {Request, Response} from "express";
 import {db} from "./database";
 import * as argon2 from 'argon2';
 import {DbUser} from "./db-user";
+import {createSessionToken} from "./security.utils";
 
 
 
@@ -53,9 +54,18 @@ async function attemptLogin(credentials:any, user:DbUser) {
         throw new Error("Password Invalid");
     }
 
-    //TODO return JWT
-    return 1;
+    return createSessionToken(user.id.toString());
 }
+
+
+
+
+
+
+
+
+
+
 
 
 
