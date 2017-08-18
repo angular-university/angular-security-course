@@ -39,8 +39,8 @@ export async function decodeJwt(token:string) {
     return payload;
 }
 
-export async function createCsrfToken(sessionToken:string) {
-    return argon2.hash(sessionToken);
+export async function createCsrfToken() {
+    return await randomBytes(32).then(bytes => bytes.toString("hex"));
 }
 
 

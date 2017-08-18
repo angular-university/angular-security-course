@@ -25,9 +25,9 @@ export class SignupComponent implements OnInit {
     constructor(private fb: FormBuilder, private authService: AuthService,
                     private router:Router) {
         this.form = this.fb.group({
-            email: ['',Validators.required],
-            password: ['',Validators.required],
-            confirm: ['',Validators.required]
+            email: ['test@gmail.com',Validators.required],
+            password: ['Password10',Validators.required],
+            confirm: ['Password10',Validators.required]
         });
     }
 
