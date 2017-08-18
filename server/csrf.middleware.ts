@@ -11,8 +11,6 @@ export function checkCsrfToken(req: Request,  res: Response,  next: NextFunction
 
     const csrfHeader = req.headers['x-xsrf-token'];
 
-    const sessionToken = req.cookies["SESSIONID"];
-
     if (csrfCookie && csrfHeader && csrfCookie === csrfHeader) {
         next();
     }
