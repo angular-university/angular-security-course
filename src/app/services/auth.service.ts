@@ -94,6 +94,9 @@ export class AuthService {
 
     signUp() {
         lockSignUp.on("authenticated", (authResult) => {
+
+            localStorage.setItem("ID_TOKEN", authResult.accessToken);
+
             lockSignUp.getUserInfo(authResult.accessToken, (error, profile) => {
                 if (error) {
                     console.error(error);
