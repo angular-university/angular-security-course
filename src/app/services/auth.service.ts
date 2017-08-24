@@ -26,23 +26,26 @@ export class AuthService {
             .subscribe(user => this.subject.next(user ? user : ANONYMOUS_USER));
     }
 
-    signUp(email:string, password:string ) {
+    signUp(email:string, password:string ): Observable<any>  {
 
-        return this.http.post<User>('/api/signup', {email, password})
-            .shareReplay()
-            .do(user => this.subject.next(user));
+        //TODO
+
+        return Observable.of(true);
     }
 
-    login(email:string, password:string ) {
-        return this.http.post<User>('/api/login', {email, password})
-            .shareReplay()
-            .do(user => this.subject.next(user));
+    login(email:string, password:string ): Observable<any> {
+
+
+        //TODO
+        return Observable.of(true);
+
     }
+
 
     logout() : Observable<any> {
-        return this.http.post('/api/logout', null)
-            .shareReplay()
-            .do(user => this.subject.next(ANONYMOUS_USER));
+
+        //TODO
+        return Observable.of(true);
     }
 }
 
