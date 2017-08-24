@@ -27,7 +27,7 @@ export class AppComponent  implements OnInit {
     }
 
     login() {
-        this.authService.login().subscribe();
+        this.authService.login();
     }
 
     logout() {

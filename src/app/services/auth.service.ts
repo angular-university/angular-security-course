@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
 import {User} from "../model/user";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
-
+import {Subject} from "rxjs/Subject";
 
 
 export const ANONYMOUS_USER: User = {
@@ -15,17 +15,17 @@ declare const Auth0Lock: any;
 
 
 const AUTH0_API_KEY = '8ZZspDUExxTwvfda6spgB24PGqvGZGYp';
-const AUTH0_SUB_DOMAIN =  'angular-academy.eu.auth0.com';
+const AUTH0_SUB_DOMAIN = 'angular-academy.eu.auth0.com';
 
 
 const LOCK_COMMON_CONFIG = {
-    autoclose:true,
+    autoclose: true,
     theme: {
         logo: 'https://angular-academy.s3.amazonaws.com/main-logo/main-page-logo-small-hat.png',
         socialButtonStyle: 'big'
     },
     languageDictionary: {
-        title:'Welcome'
+        title: 'Welcome'
     },
     auth: {
         redirect: false
@@ -34,7 +34,7 @@ const LOCK_COMMON_CONFIG = {
 
 const signUpConfig: any = {
     ...LOCK_COMMON_CONFIG,
-    initialScreen:'signUp'
+    initialScreen: 'signUp'
 };
 
 
@@ -43,13 +43,11 @@ const lockSignUp = new Auth0Lock(AUTH0_API_KEY, AUTH0_SUB_DOMAIN, signUpConfig);
 
 const loginConfig: any = {
     ...LOCK_COMMON_CONFIG,
-    initialScreen:'login'
+    initialScreen: 'login'
 };
 
 
 const lockLogin = new Auth0Lock(AUTH0_API_KEY, AUTH0_SUB_DOMAIN, loginConfig);
-
-
 
 
 @Injectable()
@@ -70,86 +68,34 @@ export class AuthService {
 
         http.get<User>('/api/user')
             .subscribe(user => this.subject.next(user ? user : ANONYMOUS_USER));
-
-        this.createAuth0AuthenticatedObservable = Observable.bindNodeCallback(lockSignUp.on, (err, authResult) => {
-            console.log("authResult", authResult);
-            return authResult;
-        });
-
-
-
-        /*
-        lock.on("authenticated", (authResult) => {
-            lock.getUserInfo(authResult.accessToken, (error, profile) => {
-                if (
-                    error) {
-
-
-                }
-                else {
-
-
-                }
-
-            });
-        });*/
-
     }
 
-    signUp(): Observable<any>  {
-
-
-        lockSignUp.on("authenticated", authResult => {
-
-            console.log("authResult", authResult);
-
+    login() {
+        lockLogin.on("authenticated", (authResult) => {
+            lockLogin.getUserInfo(authResult.accessToken, (error, profile) => {
+                if (error) {
+                    console.error(error);
+                }
+                else {
+                    console.log(profile);
+                }
+            });
         });
 
-        lockSignUp.show();
+        lockLogin.show();
+    }
 
 
-
-
-        //return this.createAuth0AuthenticatedObservable("authenticated");
-
+    signUp(): Observable<any> {
         return Observable.of(true);
     }
 
-
-
-    login(): Observable<any> {
-
-
-/*
-        lockLogin.on("authenticated", authResult => {
-
-            console.log("authResult", authResult);
-
-        });*/
-
-
-        lockLogin.show();
-
-        const create: Function = Observable.bindCallback(lockLogin.on, authResult => {
-
-            console.log("authResult", authResult);
-
-        });
-
-        return create("authenticated");
-    }
-
-
-    logout() : Observable<any> {
-
-
-
+    logout(): Observable<any> {
         //TODO
         return Observable.of(true);
     }
 
 }
-
 
 
 
