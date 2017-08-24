@@ -38,6 +38,8 @@
     "@types/lodash": "^4.14.70",
     "argon2": "^0.16.1",
     "argon2-ffi": "^1.0.1",
+    "auth0-js": "^8.9.3",
+    "auth0-lock": "^10.20.0",
     "body-parser": "^1.17.2",
     "command-line-args": "^4.0.6",
     "cookie-parser": "^1.4.3",

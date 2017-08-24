@@ -4,8 +4,6 @@ import {HttpClientModule} from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { LessonsComponent } from './lessons/lessons.component';
-import { LoginComponent } from './login/login.component';
-import { SignupComponent } from './signup/signup.component';
 import {RouterModule} from "@angular/router";
 import {routesConfig} from "./routes.config";
 import {LessonsService} from "./services/lessons.service";
@@ -21,14 +19,14 @@ import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/catch';
 
 import 'rxjs/add/observable/of';
+import 'rxjs/add/observable/bindCallback';
+import 'rxjs/add/observable/bindNodeCallback';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LessonsComponent,
-    LoginComponent,
-    SignupComponent
+    LessonsComponent
   ],
   imports: [
     BrowserModule,
