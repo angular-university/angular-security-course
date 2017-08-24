@@ -12,7 +12,12 @@ const cookieParser = require('cookie-parser');
 
 const app: Application = express();
 
-app.use(cookieParser());
+var jwt = require('express-jwt');
+
+const checkIfAuthenticated = jwt({ secret: fs.readFileSync('./demos/public.key') });
+
+
+app.use(checkIfAuthenticated);
 app.use(bodyParser.json());
 
 const commandLineArgs = require('command-line-args');

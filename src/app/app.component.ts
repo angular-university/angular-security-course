@@ -27,11 +27,15 @@ export class AppComponent  implements OnInit {
     }
 
     login() {
+
+        debugger;
+
         this.authService.login();
+
     }
 
     logout() {
-        this.authService.logout().subscribe();
+        this.authService.logout();
     }
 
 }

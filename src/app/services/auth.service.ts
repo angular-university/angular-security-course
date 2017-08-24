@@ -61,39 +61,57 @@ export class AuthService {
 
     isLoggedOut$: Observable<boolean> = this.isLoggedIn$.map(isLoggedIn => !isLoggedIn);
 
-    private createAuth0AuthenticatedObservable: Function;
-
 
     constructor(private http: HttpClient) {
+        this.loadUserData();
+    }
 
-        http.get<User>('/api/user')
+
+    loadUserData() {
+        this.http.get<User>('/api/user')
             .subscribe(user => this.subject.next(user ? user : ANONYMOUS_USER));
     }
 
     login() {
-        lockLogin.on("authenticated", (authResult) => {
-            lockLogin.getUserInfo(authResult.accessToken, (error, profile) => {
-                if (error) {
-                    console.error(error);
-                }
-                else {
-                    console.log(profile);
-                }
-            });
+        lockLogin.on("authenticated", authResult => {
+            localStorage.setItem("ID_TOKEN", authResult.accessToken);
+            this.loadUserData();
         });
-
         lockLogin.show();
     }
 
 
-    signUp(): Observable<any> {
-        return Observable.of(true);
+    logout() {
+        localStorage.removeItem("ID_TOKEN");
+        this.subject.next(ANONYMOUS_USER);
     }
 
-    logout(): Observable<any> {
-        //TODO
-        return Observable.of(true);
+
+    signUp(): Observable<any> {
+
+        const subject = new Subject();
+
+        lockSignUp.on("authenticated", (authResult) => {
+            lockSignUp.getUserInfo(authResult.accessToken, (error, profile) => {
+                if (error) {
+                    console.error(error);
+                    subject.error("Sign up failed");
+                }
+                else {
+                    this.http.post<User>('/api/signup', {email: profile.email})
+                        .shareReplay()
+                        .do(user => this.subject.next(user));
+                }
+            });
+        });
+        return subject.asObservable();
     }
+
+
+    getAuthToken() {
+        return localStorage.getItem("ID_TOKEN");
+    }
+
 
 }
 
