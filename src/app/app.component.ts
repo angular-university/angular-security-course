@@ -23,13 +23,10 @@ export class AppComponent  implements OnInit {
     }
 
     signUp() {
-        this.authService.signUp().subscribe();
+        this.authService.signUp();
     }
 
     login() {
-
-        debugger;
-
         this.authService.login();
 
     }

@@ -69,7 +69,12 @@ export class AuthService {
 
     loadUserData() {
         this.http.get<User>('/api/user')
-            .subscribe(user => this.subject.next(user ? user : ANONYMOUS_USER));
+            .subscribe(
+                user => this.subject.next(user ? user : ANONYMOUS_USER),
+                err => {
+                    console.log("Could not load user data", err);
+                    this.subject.next(ANONYMOUS_USER);
+                });
     }
 
     login() {
@@ -87,29 +92,23 @@ export class AuthService {
     }
 
 
-    signUp(): Observable<any> {
-
-        const subject = new Subject();
-
+    signUp() {
         lockSignUp.on("authenticated", (authResult) => {
             lockSignUp.getUserInfo(authResult.accessToken, (error, profile) => {
                 if (error) {
                     console.error(error);
-                    subject.error("Sign up failed");
+                    this.subject.error("Sign up failed");
                 }
                 else {
                     this.http.post<User>('/api/signup', {email: profile.email})
                         .shareReplay()
-                        .do(user => this.subject.next(user));
+                        .do(user => this.subject.next(user))
+                        .subscribe();
                 }
             });
         });
-        return subject.asObservable();
-    }
 
-
-    getAuthToken() {
-        return localStorage.getItem("ID_TOKEN");
+        lockSignUp.show();
     }
 
 
