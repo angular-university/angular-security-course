@@ -63,7 +63,7 @@ export class AuthService {
 
     isLoggedOut$: Observable<boolean> = this.isLoggedIn$.map(isLoggedIn => !isLoggedIn);
 
-    private createAuth0SignUpObservable: Function;
+    private createAuth0AuthenticatedObservable: Function;
 
 
     constructor(private http: HttpClient) {
@@ -71,10 +71,11 @@ export class AuthService {
         http.get<User>('/api/user')
             .subscribe(user => this.subject.next(user ? user : ANONYMOUS_USER));
 
-        this.createAuth0SignUpObservable = Observable.bindCallback(lockSignUp.on, authResult => {
+        this.createAuth0AuthenticatedObservable = Observable.bindNodeCallback(lockSignUp.on, (err, authResult) => {
             console.log("authResult", authResult);
             return authResult;
         });
+
 
 
         /*
@@ -97,9 +98,21 @@ export class AuthService {
 
     signUp(): Observable<any>  {
 
+
+        lockSignUp.on("authenticated", authResult => {
+
+            console.log("authResult", authResult);
+
+        });
+
         lockSignUp.show();
 
-        return this.createAuth0SignUpObservable("authenticated");
+
+
+
+        //return this.createAuth0AuthenticatedObservable("authenticated");
+
+        return Observable.of(true);
     }
 
 
@@ -107,35 +120,34 @@ export class AuthService {
     login(): Observable<any> {
 
 
-        //TODO
-        return Observable.of(true);
+/*
+        lockLogin.on("authenticated", authResult => {
 
+            console.log("authResult", authResult);
+
+        });*/
+
+
+        lockLogin.show();
+
+        const create: Function = Observable.bindCallback(lockLogin.on, authResult => {
+
+            console.log("authResult", authResult);
+
+        });
+
+        return create("authenticated");
     }
 
 
     logout() : Observable<any> {
 
+
+
         //TODO
         return Observable.of(true);
     }
 
-
-    setupAuth0Obs(lock:any) {
-
-
-
-        lock.on("authenticated", (authResult) => {
-            lock.getUserInfo(authResult.accessToken, (error, profile) => {
-                if (error) {
-
-                }
-                else {
-
-                }
-
-            });
-        });
-    }
 }
 
 

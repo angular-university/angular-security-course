@@ -22,10 +22,16 @@ export class AppComponent  implements OnInit {
         this.isLoggedOut$ = this.authService.isLoggedOut$;
     }
 
+    signUp() {
+        this.authService.signUp().subscribe();
+    }
+
+    login() {
+        this.authService.login().subscribe();
+    }
+
     logout() {
-
         this.authService.logout().subscribe();
-
     }
 
 }
