@@ -7,6 +7,7 @@ import * as auth0 from 'auth0-js';
 import {Router} from "@angular/router";
 
 import * as moment from "moment";
+import {now} from "moment";
 
 
 export const ANONYMOUS_USER: User = {
@@ -38,7 +39,9 @@ export class AuthService {
     private loggedInSubject = new BehaviorSubject<boolean>(undefined);
 
     constructor(private http: HttpClient, private router: Router) {
-        this.loadUserData();
+        if (this.isLoggedIn()) {
+            this.loadUserData();
+        }
     }
 
     loadUserData() {
@@ -72,10 +75,16 @@ export class AuthService {
     }
 
     private setSession(authResult) {
-        const expiresAt = JSON.stringify(moment().add(authResult.expiresIn, 'ms').valueOf());
+
+        console.log("authResult.expiresIn", authResult.expiresIn);
+
+        const expiresAt = moment(now()).add(authResult.expiresIn, 'second');
+
+        console.log("Session will expire at ", expiresAt.format('YYYY-MMM-DD HH:mm:ss'));
+
         localStorage.setItem('access_token', authResult.accessToken);
         localStorage.setItem('id_token', authResult.idToken);
-        localStorage.setItem('expires_at', expiresAt);
+        localStorage.setItem('expires_at', JSON.stringify(expiresAt.valueOf()));
         console.log("authResult", authResult);
         this.loggedInSubject.next(true);
     }
@@ -89,12 +98,13 @@ export class AuthService {
     }
 
     public isLoggedIn(): boolean {
+        return moment().isBefore(this.getExpiration());
+    }
+
+    getExpiration() {
         const expiration = localStorage.getItem('expires_at');
-        if (!expiration) {
-            return false;
-        }
         const expiresAt = JSON.parse(expiration);
-        return moment().isBefore(moment(expiresAt));
+        return  moment(expiresAt);
     }
 
     isLoggedOut() {
