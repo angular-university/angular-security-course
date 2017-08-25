@@ -5,8 +5,7 @@ import {Application} from "express";
 import * as fs from 'fs';
 import * as https from 'https';
 import {readAllLessons} from "./read-all-lessons.route";
-import {createUser} from "./create-user.route";
-import {getUser} from "./get-user.route";
+import {userInfo} from "./user-info.route";
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const jwksRsa = require('jwks-rsa');
@@ -28,7 +27,17 @@ const checkIfAuthenticated = jwt({
 });
 
 
+
 app.use(checkIfAuthenticated);
+
+app.use(function(err, req, res, next) {
+    if(err.name === 'UnauthorizedError') {
+        res.status(err.status).json({message:err.message});
+        return;
+    }
+    next();
+});
+
 
 
 app.use(bodyParser.json());
@@ -45,11 +54,8 @@ const options = commandLineArgs(optionDefinitions);
 app.route('/api/lessons')
     .get(readAllLessons);
 
-app.route('/api/signup')
-    .post(createUser);
-
-app.route('/api/user')
-    .get(getUser);
+app.route('/api/userinfo')
+    .put(userInfo);
 
 if (options.secure) {
 

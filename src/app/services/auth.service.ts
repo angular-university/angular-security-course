@@ -41,18 +41,8 @@ export class AuthService {
 
     constructor(private http: HttpClient, private router: Router) {
         if (this.isLoggedIn()) {
-            this.loadUserData();
+            this.userInfo();
         }
-    }
-
-    loadUserData() {
-        this.http.get<User>('/api/user')
-            .subscribe(
-                user => this.userSubject.next(user ? user : ANONYMOUS_USER),
-                err => {
-                    console.log("Could not load user data", err);
-                    this.userSubject.next(ANONYMOUS_USER);
-                });
     }
 
     login() {
@@ -77,14 +67,21 @@ export class AuthService {
                     }
 
                     console.log("User profile", user);
-
-                });
+                    this.userInfo();
+               });
 
             } else if (err) {
                 console.log(err);
                 alert(`Error: ${err.error}. Check the console for further details.`);
             }
         });
+    }
+
+    private userInfo() {
+        this.http.put<User>('/api/userinfo', null)
+            .shareReplay()
+            .do(user => this.userSubject.next(user))
+            .subscribe();
     }
 
     private setSession(authResult) {
@@ -122,21 +119,6 @@ export class AuthService {
 
     isLoggedOut() {
         return !this.isLoggedIn();
-    }
-
-
-
-    onUserInfo(error, profile) {
-        if (error) {
-            console.error(error);
-            this.userSubject.error("Sign up failed");
-        }
-        else {
-            this.http.post<User>('/api/signup', {email: profile.email})
-                .shareReplay()
-                .do(user => this.userSubject.next(user))
-                .subscribe();
-        }
     }
 
 
