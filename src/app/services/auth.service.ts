@@ -3,6 +3,10 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
 import {User} from "../model/user";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
+import * as auth0 from 'auth0-js';
+import {Router} from "@angular/router";
+
+import * as moment from "moment";
 
 
 export const ANONYMOUS_USER: User = {
@@ -10,34 +14,10 @@ export const ANONYMOUS_USER: User = {
     email: ''
 };
 
-declare const Auth0Lock: any;
-
-
-const AUTH0_API_KEY = 'hHhF4PWGY7vxLQH2HatJaUOertB1dDrU';
-const AUTH0_SUB_DOMAIN = 'angularsecuritycourse.auth0.com';
-
-
-const LOCK_COMMON_CONFIG = {
-    autoclose: true,
-    theme: {
-        logo: 'https://angular-academy.s3.amazonaws.com/main-logo/main-page-logo-small-hat.png',
-        socialButtonStyle: 'big'
-    },
-    languageDictionary: {
-        title: 'Welcome'
-    },
-    auth: {
-        redirect: false
-    }
+const AUTH_CONFIG = {
+    clientID: 'hHhF4PWGY7vxLQH2HatJaUOertB1dDrU',
+    domain: "angularsecuritycourse.auth0.com"
 };
-
-const signUpConfig: any = {
-    ...LOCK_COMMON_CONFIG,
-    initialScreen: 'signUp'
-};
-
-
-const lockSignUp = new Auth0Lock(AUTH0_API_KEY, AUTH0_SUB_DOMAIN, signUpConfig);
 
 
 
@@ -46,78 +26,94 @@ const lockSignUp = new Auth0Lock(AUTH0_API_KEY, AUTH0_SUB_DOMAIN, signUpConfig);
 @Injectable()
 export class AuthService {
 
-    private subject = new BehaviorSubject<User>(undefined);
+    auth0 = new auth0.WebAuth({
+        clientID: AUTH_CONFIG.clientID,
+        domain: AUTH_CONFIG.domain,
+        responseType: 'token id_token',
+        redirectUri: 'https://localhost:4200/lessons'
+    });
 
-    user$: Observable<User> = this.subject.asObservable().filter(user => !!user);
+    private userSubject = new BehaviorSubject<User>(undefined);
 
-    isLoggedIn$: Observable<boolean> = this.user$.map(user => !!user.id);
+    user$: Observable<User> = this.userSubject.asObservable().filter(user => !!user);
 
-    isLoggedOut$: Observable<boolean> = this.isLoggedIn$.map(isLoggedIn => !isLoggedIn);
+    private loggedInSubject = new BehaviorSubject<boolean>(undefined);
 
-
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private router: Router) {
         this.loadUserData();
     }
-
 
     loadUserData() {
         this.http.get<User>('/api/user')
             .subscribe(
-                user => this.subject.next(user ? user : ANONYMOUS_USER),
+                user => this.userSubject.next(user ? user : ANONYMOUS_USER),
                 err => {
                     console.log("Could not load user data", err);
-                    this.subject.next(ANONYMOUS_USER);
+                    this.userSubject.next(ANONYMOUS_USER);
                 });
     }
 
     login() {
+        this.auth0.authorize();
+    }
 
-        const loginConfig: any = {
-            ...LOCK_COMMON_CONFIG,
-            initialScreen: 'login'
-        };
-
-        const lockLogin = new Auth0Lock(AUTH0_API_KEY, AUTH0_SUB_DOMAIN, loginConfig);
-
-        lockLogin.on("authenticated", authResult => {
-
-            console.log(authResult);
-
-            localStorage.setItem("ID_TOKEN", authResult.idToken);
-            this.loadUserData();
+    retrieveAuthInfoFromUrl() {
+        this.auth0.parseHash((err, authResult) => {
+            if (authResult && authResult.accessToken && authResult.idToken) {
+                //window.location.hash = '';
+                this.setSession(authResult);
+            } else if (err) {
+                console.log(err);
+                alert(`Error: ${err.error}. Check the console for further details.`);
+            }
         });
+    }
 
-        lockLogin.show();
+    private setSession(authResult): void {
+        const expiresAt = JSON.stringify(moment().add(authResult.expiresIn, 'ms').valueOf());
+        localStorage.setItem('access_token', authResult.accessToken);
+        localStorage.setItem('id_token', authResult.idToken);
+        localStorage.setItem('expires_at', expiresAt);
+        this.loggedInSubject.next(true);
     }
 
     logout() {
-        localStorage.removeItem("ID_TOKEN");
-        this.subject.next(ANONYMOUS_USER);
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('id_token');
+        localStorage.removeItem('expires_at');
+        this.loggedInSubject.next(false);
+        this.router.navigate(['/lessons']);
+    }
+
+    public isLoggedIn(): boolean {
+        const expiration = localStorage.getItem('expires_at');
+        if (!expiration) {
+            return false;
+        }
+        const expiresAt = JSON.parse(expiration);
+        return moment().isBefore(moment(expiresAt));
+    }
+
+    isLoggedOut() {
+        return !this.isLoggedIn();
     }
 
     signUp() {
 
-        //TODO
-        lockSignUp.show();
-    }
 
+    }
 
     onUserInfo(error, profile) {
         if (error) {
             console.error(error);
-            this.subject.error("Sign up failed");
+            this.userSubject.error("Sign up failed");
         }
         else {
             this.http.post<User>('/api/signup', {email: profile.email})
                 .shareReplay()
-                .do(user => this.subject.next(user))
+                .do(user => this.userSubject.next(user))
                 .subscribe();
         }
-    }
-
-    isAuthenticated() {
-
-        //TODO
     }
 
 

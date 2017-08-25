@@ -10,29 +10,25 @@ import {User} from "./model/user";
 })
 export class AppComponent  implements OnInit {
 
-    isLoggedIn$: Observable<boolean>;
-    isLoggedOut$: Observable<boolean>;
-
-    constructor(private authService:AuthService) {
+    constructor(private auth:AuthService) {
 
     }
 
     ngOnInit() {
-        this.isLoggedIn$ = this.authService.isLoggedIn$;
-        this.isLoggedOut$ = this.authService.isLoggedOut$;
+        this.auth.retrieveAuthInfoFromUrl();
     }
 
     signUp() {
-        this.authService.signUp();
+        this.auth.signUp();
     }
 
     login() {
-        this.authService.login();
+        this.auth.login();
 
     }
 
     logout() {
-        this.authService.logout();
+        this.auth.logout();
     }
 
 }
