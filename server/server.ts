@@ -9,15 +9,28 @@ import {createUser} from "./create-user.route";
 import {getUser} from "./get-user.route";
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const jwksRsa = require('jwks-rsa');
+const jwt = require('express-jwt');
+
 
 const app: Application = express();
 
-var jwt = require('express-jwt');
 
-const checkIfAuthenticated = jwt({ secret: fs.readFileSync('./demos/public.key') });
+const checkIfAuthenticated = jwt({
+    // Dynamically provide a signing key based on the kid in the header and the singing keys provided by the JWKS endpoint.
+    secret: jwksRsa.expressJwtSecret({
+        cache: true,
+        rateLimit: true,
+        jwksRequestsPerMinute: 5,
+        jwksUri: 'https://angularsecuritycourse.auth0.com/.well-known/jwks.json'
+    }),
+    algorithms: [ 'RS256' ]
+});
 
 
 app.use(checkIfAuthenticated);
+
+
 app.use(bodyParser.json());
 
 const commandLineArgs = require('command-line-args');

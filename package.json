@@ -48,6 +48,7 @@
     "express-jwt": "^5.3.0",
     "http-server": "^0.10.0",
     "jsonwebtoken": "^7.4.2",
+    "jwks-rsa": "^1.2.0",
     "moment": "^2.18.1",
     "nodemon": "^1.11.0",
     "password-validator": "^4.0.0",

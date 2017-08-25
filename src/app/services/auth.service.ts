@@ -3,7 +3,6 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
 import {User} from "../model/user";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
-import {Subject} from "rxjs/Subject";
 
 
 export const ANONYMOUS_USER: User = {
@@ -14,8 +13,8 @@ export const ANONYMOUS_USER: User = {
 declare const Auth0Lock: any;
 
 
-const AUTH0_API_KEY = '8ZZspDUExxTwvfda6spgB24PGqvGZGYp';
-const AUTH0_SUB_DOMAIN = 'angular-academy.eu.auth0.com';
+const AUTH0_API_KEY = 'hHhF4PWGY7vxLQH2HatJaUOertB1dDrU';
+const AUTH0_SUB_DOMAIN = 'angularsecuritycourse.auth0.com';
 
 
 const LOCK_COMMON_CONFIG = {
@@ -41,13 +40,7 @@ const signUpConfig: any = {
 const lockSignUp = new Auth0Lock(AUTH0_API_KEY, AUTH0_SUB_DOMAIN, signUpConfig);
 
 
-const loginConfig: any = {
-    ...LOCK_COMMON_CONFIG,
-    initialScreen: 'login'
-};
 
-
-const lockLogin = new Auth0Lock(AUTH0_API_KEY, AUTH0_SUB_DOMAIN, loginConfig);
 
 
 @Injectable()
@@ -78,40 +71,53 @@ export class AuthService {
     }
 
     login() {
+
+        const loginConfig: any = {
+            ...LOCK_COMMON_CONFIG,
+            initialScreen: 'login'
+        };
+
+        const lockLogin = new Auth0Lock(AUTH0_API_KEY, AUTH0_SUB_DOMAIN, loginConfig);
+
         lockLogin.on("authenticated", authResult => {
-            localStorage.setItem("ID_TOKEN", authResult.accessToken);
+
+            console.log(authResult);
+
+            localStorage.setItem("ID_TOKEN", authResult.idToken);
             this.loadUserData();
         });
+
         lockLogin.show();
     }
-
 
     logout() {
         localStorage.removeItem("ID_TOKEN");
         this.subject.next(ANONYMOUS_USER);
     }
 
-
     signUp() {
-        lockSignUp.on("authenticated", (authResult) => {
 
-            localStorage.setItem("ID_TOKEN", authResult.accessToken);
-
-            lockSignUp.getUserInfo(authResult.accessToken, (error, profile) => {
-                if (error) {
-                    console.error(error);
-                    this.subject.error("Sign up failed");
-                }
-                else {
-                    this.http.post<User>('/api/signup', {email: profile.email})
-                        .shareReplay()
-                        .do(user => this.subject.next(user))
-                        .subscribe();
-                }
-            });
-        });
-
+        //TODO
         lockSignUp.show();
+    }
+
+
+    onUserInfo(error, profile) {
+        if (error) {
+            console.error(error);
+            this.subject.error("Sign up failed");
+        }
+        else {
+            this.http.post<User>('/api/signup', {email: profile.email})
+                .shareReplay()
+                .do(user => this.subject.next(user))
+                .subscribe();
+        }
+    }
+
+    isAuthenticated() {
+
+        //TODO
     }
 
 
