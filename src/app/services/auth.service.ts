@@ -29,7 +29,8 @@ export class AuthService {
         clientID: AUTH_CONFIG.clientID,
         domain: AUTH_CONFIG.domain,
         responseType: 'token id_token',
-        redirectUri: 'https://localhost:4200/lessons'
+        redirectUri: 'https://localhost:4200/lessons',
+        scope: 'openid email'
     });
 
     private userSubject = new BehaviorSubject<User>(undefined);
@@ -67,6 +68,18 @@ export class AuthService {
             if (authResult && authResult.accessToken && authResult.idToken) {
                 window.location.hash = '';
                 this.setSession(authResult);
+
+                this.auth0.client.userInfo(authResult.accessToken, (err, user) => {
+
+                    if (err) {
+                        console.log("Could not retrieve user profile", err);
+                        return;
+                    }
+
+                    console.log("User profile", user);
+
+                });
+
             } else if (err) {
                 console.log(err);
                 alert(`Error: ${err.error}. Check the console for further details.`);
