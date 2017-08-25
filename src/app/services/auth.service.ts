@@ -60,7 +60,7 @@ export class AuthService {
     retrieveAuthInfoFromUrl() {
         this.auth0.parseHash((err, authResult) => {
             if (authResult && authResult.accessToken && authResult.idToken) {
-                //window.location.hash = '';
+                window.location.hash = '';
                 this.setSession(authResult);
             } else if (err) {
                 console.log(err);
