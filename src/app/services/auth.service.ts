@@ -12,8 +12,8 @@ export const ANONYMOUS_USER: User = {
 };
 
 const AUTH_CONFIG = {
-    clientID: 'hHhF4PWGY7vxLQH2HatJaUOertB1dDrU',
-    domain: "angularsecuritycourse.auth0.com"
+    clientID: '2rfnGSUN3BRd2Bg3MLY3IPCWbQhxR7bG',
+    domain: "angularuniv-security-course.auth0.com"
 };
 
 
@@ -36,7 +36,7 @@ export class AuthService {
     }
 
     login() {
-
+        this.auth0.authorize();
     }
 
     signUp() {
