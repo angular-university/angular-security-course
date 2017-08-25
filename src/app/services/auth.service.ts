@@ -48,8 +48,8 @@ export class AuthService {
 
     }
 
-    public isLoggedIn(): boolean {
-        return true;
+    public isLoggedIn() {
+        return false;
     }
 
     isLoggedOut() {
