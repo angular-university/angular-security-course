@@ -24,8 +24,7 @@ export class AuthService {
         clientID: AUTH_CONFIG.clientID,
         domain: AUTH_CONFIG.domain,
         responseType: 'token id_token',
-        redirectUri: 'https://localhost:4200/lessons',
-        scope: 'openid email'
+        redirectUri: 'https://localhost:4200/lessons'
     });
 
     private userSubject = new BehaviorSubject<User>(undefined);
