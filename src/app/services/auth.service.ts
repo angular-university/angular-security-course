@@ -6,10 +6,6 @@ import {BehaviorSubject} from "rxjs/BehaviorSubject";
 import * as auth0 from 'auth0-js';
 import {Router} from "@angular/router";
 
-import * as moment from "moment";
-import {now} from "moment";
-
-
 export const ANONYMOUS_USER: User = {
     id: undefined,
     email: ''
@@ -19,7 +15,6 @@ const AUTH_CONFIG = {
     clientID: 'hHhF4PWGY7vxLQH2HatJaUOertB1dDrU',
     domain: "angularsecuritycourse.auth0.com"
 };
-
 
 
 @Injectable()
@@ -37,90 +32,29 @@ export class AuthService {
 
     user$: Observable<User> = this.userSubject.asObservable().filter(user => !!user);
 
-    private loggedInSubject = new BehaviorSubject<boolean>(undefined);
-
     constructor(private http: HttpClient, private router: Router) {
-        if (this.isLoggedIn()) {
-            this.userInfo();
-        }
+
     }
 
     login() {
-        this.auth0.authorize({initialScreen:'login'});
+
     }
 
     signUp() {
-        this.auth0.authorize({initialScreen:'signUp'});
-    }
 
-    retrieveAuthInfoFromUrl() {
-        this.auth0.parseHash((err, authResult) => {
-            if (authResult && authResult.accessToken && authResult.idToken) {
-                window.location.hash = '';
-                this.setSession(authResult);
-
-                this.auth0.client.userInfo(authResult.accessToken, (err, user) => {
-
-                    if (err) {
-                        console.log("Could not retrieve user profile", err);
-                        return;
-                    }
-
-                    console.log("User profile", user);
-                    this.userInfo();
-               });
-
-            } else if (err) {
-                console.log(err);
-                alert(`Error: ${err.error}. Check the console for further details.`);
-            }
-        });
-    }
-
-    private userInfo() {
-        this.http.put<User>('/api/userinfo', null)
-            .shareReplay()
-            .do(user => this.userSubject.next(user))
-            .subscribe();
-    }
-
-    private setSession(authResult) {
-
-        console.log("authResult.expiresIn", authResult.expiresIn);
-
-        const expiresAt = moment(now()).add(authResult.expiresIn, 'second');
-
-        console.log("Session will expire at ", expiresAt.format('YYYY-MMM-DD HH:mm:ss'));
-
-        localStorage.setItem('access_token', authResult.accessToken);
-        localStorage.setItem('id_token', authResult.idToken);
-        localStorage.setItem('expires_at', JSON.stringify(expiresAt.valueOf()));
-        console.log("authResult", authResult);
-        this.loggedInSubject.next(true);
     }
 
     logout() {
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('id_token');
-        localStorage.removeItem('expires_at');
-        this.loggedInSubject.next(false);
-        this.router.navigate(['/lessons']);
+
     }
 
     public isLoggedIn(): boolean {
-        return moment().isBefore(this.getExpiration());
-    }
-
-    getExpiration() {
-        const expiration = localStorage.getItem('expires_at');
-        const expiresAt = JSON.parse(expiration);
-        return  moment(expiresAt);
+        return true;
     }
 
     isLoggedOut() {
         return !this.isLoggedIn();
     }
-
 
 }
 
