@@ -21,8 +21,6 @@ const AUTH_CONFIG = {
 
 
 
-
-
 @Injectable()
 export class AuthService {
 
@@ -54,7 +52,11 @@ export class AuthService {
     }
 
     login() {
-        this.auth0.authorize();
+        this.auth0.authorize({initialScreen:'login'});
+    }
+
+    signUp() {
+        this.auth0.authorize({initialScreen:'signUp'});
     }
 
     retrieveAuthInfoFromUrl() {
@@ -69,11 +71,12 @@ export class AuthService {
         });
     }
 
-    private setSession(authResult): void {
+    private setSession(authResult) {
         const expiresAt = JSON.stringify(moment().add(authResult.expiresIn, 'ms').valueOf());
         localStorage.setItem('access_token', authResult.accessToken);
         localStorage.setItem('id_token', authResult.idToken);
         localStorage.setItem('expires_at', expiresAt);
+        console.log("authResult", authResult);
         this.loggedInSubject.next(true);
     }
 
@@ -98,10 +101,7 @@ export class AuthService {
         return !this.isLoggedIn();
     }
 
-    signUp() {
 
-
-    }
 
     onUserInfo(error, profile) {
         if (error) {
