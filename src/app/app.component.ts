@@ -16,9 +16,6 @@ export class AppComponent  implements OnInit {
 
     ngOnInit() {
 
-        console.log("Session will expire at ", this.auth.getExpiration().format('YYYY-MMM-DD HH:mm:ss'));
-
-        this.auth.retrieveAuthInfoFromUrl();
     }
 
     signUp() {
