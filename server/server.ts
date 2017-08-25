@@ -19,6 +19,7 @@ const optionDefinitions = [
 
 const options = commandLineArgs(optionDefinitions);
 
+
 // REST API
 app.route('/api/lessons')
     .get(readAllLessons);
