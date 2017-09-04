@@ -26,11 +26,11 @@ export class AuthService {
     }
 
     login() {
-        this.auth0.authorize();
+        this.auth0.authorize({initialScreen:'login'});
     }
 
     signUp() {
-
+        this.auth0.authorize({initialScreen:'signUp'});
     }
 
     retrieveAuthInfoFromUrl() {
