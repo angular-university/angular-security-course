@@ -3,6 +3,9 @@ import {HttpClient} from "@angular/common/http";
 import * as auth0 from 'auth0-js';
 import {Router} from "@angular/router";
 import * as moment from "moment";
+import {User} from "../model/user";
+import {Observable} from "rxjs/Observable";
+import {BehaviorSubject} from "rxjs/BehaviorSubject";
 
 
 const AUTH_CONFIG = {
@@ -18,11 +21,18 @@ export class AuthService {
         clientID: AUTH_CONFIG.clientID,
         domain: AUTH_CONFIG.domain,
         responseType: 'token id_token',
-        redirectUri: 'https://localhost:4200/lessons'
+        redirectUri: 'https://localhost:4200/lessons',
+        scope: 'openid email'
     });
 
-    constructor(private http: HttpClient, private router: Router) {
+    private subject = new BehaviorSubject<User>(undefined);
 
+    user$: Observable<User> = this.subject.asObservable().filter(user => !!undefined);
+
+    constructor(private http: HttpClient, private router: Router) {
+        if (this.isLoggedIn()) {
+            this.userInfo();
+        }
     }
 
     login() {
@@ -42,8 +52,18 @@ export class AuthService {
                 window.location.hash = '';
                 console.log("Authentication successful, authResult: ", authResult);
                 this.setSession(authResult);
+
+                this.userInfo();
+
             }
         });
+    }
+
+    userInfo() {
+        this.http.put<User>('/api/userinfo', null)
+            .shareReplay()
+            .do(user => this.subject.next(user))
+            .subscribe();
     }
 
     logout() {
