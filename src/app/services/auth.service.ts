@@ -1,16 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs/Observable";
-import {User} from "../model/user";
-import {BehaviorSubject} from "rxjs/BehaviorSubject";
 import * as auth0 from 'auth0-js';
 import {Router} from "@angular/router";
 import * as moment from "moment";
 
-export const ANONYMOUS_USER: User = {
-    id: undefined,
-    email: ''
-};
 
 const AUTH_CONFIG = {
     clientID: '2rfnGSUN3BRd2Bg3MLY3IPCWbQhxR7bG',
@@ -42,7 +35,6 @@ export class AuthService {
 
     retrieveAuthInfoFromUrl() {
         this.auth0.parseHash((err, authResult) => {
-
             if (err) {
                 console.log("Could not parse the hash", err);
             }
@@ -51,7 +43,6 @@ export class AuthService {
                 console.log("Authentication successful, authResult: ", authResult);
                 this.setSession(authResult);
             }
-
         });
     }
 
