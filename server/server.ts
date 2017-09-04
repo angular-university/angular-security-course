@@ -7,6 +7,10 @@ import * as https from 'https';
 import {readAllLessons} from "./read-all-lessons.route";
 const bodyParser = require('body-parser');
 
+const jwksRsa = require('jwks-rsa');
+const jwt = require('express-jwt');
+
+
 const app: Application = express();
 
 app.use(bodyParser.json());
@@ -18,6 +22,27 @@ const optionDefinitions = [
 ];
 
 const options = commandLineArgs(optionDefinitions);
+
+const checkIfAuthenticated = jwt({
+    secret: jwksRsa.expressJwtSecret({
+        cache: true,
+        rateLimit: true,
+        jwksUri: "https://angularuniv-security-course.auth0.com/.well-known/jwks.json"
+    }),
+    algorithms: ['RS256']
+});
+
+
+app.use(checkIfAuthenticated);
+
+app.use((err, req, res, next) => {
+    if (err && err.name == "UnauthorizedError") {
+        res.status(err.status).json({message: err.message});
+    }
+    else {
+        next();
+    }
+});
 
 
 // REST API
