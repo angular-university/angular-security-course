@@ -5,6 +5,7 @@ import {Application} from "express";
 import * as fs from 'fs';
 import * as https from 'https';
 import {readAllLessons} from "./read-all-lessons.route";
+import {userInfo} from "./user-info.route";
 const bodyParser = require('body-parser');
 
 const jwksRsa = require('jwks-rsa');
@@ -48,6 +49,9 @@ app.use((err, req, res, next) => {
 // REST API
 app.route('/api/lessons')
     .get(readAllLessons);
+
+app.route('/api/userinfo')
+    .put(userInfo);
 
 
 if (options.secure) {
