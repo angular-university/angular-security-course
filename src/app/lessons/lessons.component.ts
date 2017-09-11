@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {LessonsService} from "../services/lessons.service";
 import {Observable} from "rxjs/Observable";
 import {Lesson} from "../model/lesson";
-import {AuthService} from "../services/auth.service";
 
 @Component({
     selector: 'lessons',
@@ -12,9 +11,8 @@ import {AuthService} from "../services/auth.service";
 export class LessonsComponent implements OnInit {
 
     lessons$: Observable<Lesson[]>;
-    isLoggedIn$: Observable<boolean>;
 
-    constructor(private lessonsService: LessonsService, private auth: AuthService) {
+    constructor(private lessonsService: LessonsService) {
 
     }
 

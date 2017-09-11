@@ -1,7 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthService} from "./services/auth.service";
 import {Observable} from "rxjs/Observable";
-import {User} from "./model/user";
 
 @Component({
   selector: 'app-root',
@@ -10,26 +8,12 @@ import {User} from "./model/user";
 })
 export class AppComponent  implements OnInit {
 
-    constructor(private auth:AuthService) {
+    constructor() {
 
     }
 
     ngOnInit() {
 
-        this.auth.retrieveAuthInfoFromUrl();
-    }
-
-    signUp() {
-        this.auth.signUp();
-    }
-
-    login() {
-        this.auth.login();
-
-    }
-
-    logout() {
-        this.auth.logout();
     }
 
 }

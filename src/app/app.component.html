@@ -9,15 +9,6 @@
         <li>
             <a routerLink="/lessons">Lessons</a>
         </li>
-        <li *ngIf="auth.isLoggedOut()" (click)="signUp()">
-            <a>Sign Up</a>
-        </li>
-        <li *ngIf="auth.isLoggedOut()" (click)="login()">
-            <a>Login</a>
-        </li>
-        <li *ngIf="auth.isLoggedIn()" (click)="logout()">
-            <a>Logout</a>
-        </li>
     </ul>
 </header>
 
