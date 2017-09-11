@@ -21,6 +21,10 @@ export class LessonsComponent implements OnInit {
         this.lessons$ = this.lessonsService.loadAllLessons().catch(err => Observable.of([]));
     }
 
+    safeHtml(unsafeHtml) {
+        return this.sanitizer.bypassSecurityTrustHtml(unsafeHtml);
+    }
+
     safeUrl(unsafeUrl) {
         return this.sanitizer.bypassSecurityTrustResourceUrl(unsafeUrl);
     }

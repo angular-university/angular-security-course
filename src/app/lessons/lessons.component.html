@@ -5,7 +5,7 @@
 
         <h3>{{lesson.description}}</h3>
 
-        <div [innerHtml]="lesson.longDescription"></div>
+        <div [innerHtml]="safeHtml(lesson.longDescription)"></div>
 
         <iframe class="lesson-video" [src]="safeUrl(lesson.videoUrl)"></iframe>
 
