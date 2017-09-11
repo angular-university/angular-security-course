@@ -7,8 +7,7 @@ export const SAFE_LESSONS = {
         "longDescription": [
             {
                 seqNo: 1,
-                text: `This is step by step guide to create your`,
-                type: "NORMAL"
+                text: `This is step by step guide to create your`
             },
             {
                 seqNo: 2,
@@ -22,8 +21,7 @@ export const SAFE_LESSONS = {
             },
             {
                 seqNo: 4,
-                text: "just starting out with the framework.This lesson will show how to create a component, and how to link the component to a",
-                type: "NORMAL"
+                text: "just starting out with the framework.This lesson will show how to create a component, and how to link the component to a"
             },
             {
                 seqNo: 5,
@@ -32,8 +30,7 @@ export const SAFE_LESSONS = {
             },
             {
                 seqNo: 6,
-                text: "It will show how to give the component a given template.",
-                type: "NORMAL"
+                text: "It will show how to give the component a given template."
             }
         ],
         "tags": "BEGINNER",
