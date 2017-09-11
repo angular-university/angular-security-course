@@ -10,6 +10,7 @@
     "start": "ng serve --proxy-config ./proxy.json --ssl 1 --ssl-key key.pem --ssl-cert cert.pem",
     "start-server": "./node_modules/.bin/ts-node ./server/server.ts --secure",
     "server": "./node_modules/.bin/nodemon  -w ./server --ext \".ts\" --exec \"npm run start-server\"",
+    "xss-server": "./node_modules/.bin/ts-node ./server/xss-server.ts",
     "hash": "node ./demos/hash.js",
     "hash-salt": "node ./demos/hash-salt.js",
     "verify-password": "node ./demos/verify-password.js",
