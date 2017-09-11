@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {LessonsService} from "../services/lessons.service";
 import {Observable} from "rxjs/Observable";
 import {Lesson} from "../model/lesson";
-import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
     selector: 'lessons',
@@ -13,7 +12,7 @@ export class LessonsComponent implements OnInit {
 
     lessons$: Observable<Lesson[]>;
 
-    constructor(private lessonsService: LessonsService, private sanitizer: DomSanitizer) {
+    constructor(private lessonsService: LessonsService) {
 
     }
 
@@ -21,12 +20,5 @@ export class LessonsComponent implements OnInit {
         this.lessons$ = this.lessonsService.loadAllLessons().catch(err => Observable.of([]));
     }
 
-    safeHtml(unsafeHtml) {
-        return this.sanitizer.bypassSecurityTrustHtml(unsafeHtml);
-    }
-
-    safeUrl(unsafeUrl) {
-        return this.sanitizer.bypassSecurityTrustResourceUrl(unsafeUrl);
-    }
 
 }
