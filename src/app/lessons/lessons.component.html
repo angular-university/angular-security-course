@@ -1,15 +1,13 @@
 
 <div class="lessons-list-container v-h-center-block-parent">
 
-    <h2>All Lessons</h2>
-
     <div class="lesson-detail card card-strong" *ngFor="let lesson of lessons$ | async">
 
-        <h3>{{lesson.title}}</h3>
+        <h3>{{lesson.description}}</h3>
 
         <div [innerHtml]="lesson.longDescription"></div>
 
-        <iframe class="lesson-video" [src]="lesson.videoUrl"></iframe>
+        <iframe class="lesson-video" [src]="safeUrl(lesson.videoUrl)"></iframe>
 
     </div>
 
