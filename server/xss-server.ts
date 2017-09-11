@@ -19,10 +19,9 @@ app.route('/img/xss')
     .get((req, res) => {
 
 
-
         console.log("XSS Server Received User Cookies: " + req.query.userCookies);
 
-        var img = fs.readFileSync('./server/logo.png');
+        const img = fs.readFileSync('./server/logo.png');
         res.writeHead(200, {'Content-Type': 'image/png' });
         res.end(img, 'binary');
 
