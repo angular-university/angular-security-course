@@ -10,3 +10,11 @@ h2 {
     margin-bottom: 40px;
 
 }
+
+.frag-bold {
+    font-weight: bold;
+}
+
+.frag-italic {
+    font-style: italic;
+}
