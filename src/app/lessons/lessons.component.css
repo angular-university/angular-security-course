@@ -4,7 +4,7 @@ h2 {
 }
 
 
-.lesson-detail {
+::ng-deep .lesson-detail {
 
     padding: 15px 10px;
     margin-bottom: 40px;
