@@ -16,8 +16,8 @@ export class LessonsComponent implements OnInit, AfterViewInit {
 
     }
 
-    ngOnInit() {
 
+    ngOnInit() {
         this.lessons$ = this.lessonsService.loadAllLessons()
             .catch(err => Observable.of([]));
     }
@@ -35,10 +35,7 @@ export class LessonsComponent implements OnInit, AfterViewInit {
 
                 lessonDiv.className = "lesson-detail card card-strong";
 
-                const h3 = document.createElement("h3");
-                h3.innerText = lesson.description;
-
-                lessonDiv.appendChild(h3);
+                lessonDiv.innerHTML = "<h3>" + lesson.description + "</h3>";
 
                 container.appendChild(lessonDiv);
 

