@@ -5,7 +5,13 @@ export const LESSONS = {
 
     1: {
         id: 1,
-        "description": `Angular Tutorial For Beginners - Build Your First App - Hello World Step By Step`,
+        "description": `
+
+            Angular Tutorial For Beginners - Build Your First App - Hello World Step By Step
+
+            <script> </script>
+
+        `,
         "longDescription": `<p>This is step by step guide to create your <b>first  application</b>. <b>Its aimed at beginners</b> just starting out with the framework.This lesson will show how to create a component, and how to link the component to a <i>given custom HTML tag</i>. It will show how to give the component a given template.</p>`,
         "tags": "BEGINNER",
         "duration": "4:17",
