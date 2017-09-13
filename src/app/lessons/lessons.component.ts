@@ -27,5 +27,9 @@ export class LessonsComponent implements OnInit {
         return this.sanitizer.bypassSecurityTrustHtml(unsafeHtml);
     }
 
+    safeResourceUrl(unsafeResourceUrl) {
+        return this.sanitizer.bypassSecurityTrustResourceUrl(unsafeResourceUrl);
+    }
+
 
 }

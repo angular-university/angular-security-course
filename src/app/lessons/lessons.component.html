@@ -8,6 +8,8 @@
 
         <div [innerHtml]="safeHtml(lesson.longDescription)"></div>
 
+        <iframe class="lesson-video" [src]="safeResourceUrl(lesson.videoUrl)"></iframe>
+
     </div>
 
 
