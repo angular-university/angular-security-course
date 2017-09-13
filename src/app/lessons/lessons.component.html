@@ -2,4 +2,11 @@
 <div id="lessons" class="lessons-list-container v-h-center-block-parent">
 
 
+    <div class="lesson-detail card card-strong" *ngFor="let lesson of lessons$ | async">
+
+        <h3>{{lesson.description}}</h3>
+
+    </div>
+
+
 </div>

