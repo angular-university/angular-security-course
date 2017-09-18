@@ -6,7 +6,8 @@ import {BehaviorSubject} from "rxjs/BehaviorSubject";
 
 export const ANONYMOUS_USER: User = {
     id: undefined,
-    email: ''
+    email: '',
+    roles: []
 }
 
 
@@ -26,9 +27,6 @@ export class AuthService {
             .subscribe(user => this.subject.next(user ? user : ANONYMOUS_USER));
     }
 
-
-
-
     signUp(email:string, password:string ) {
 
         return this.http.post<User>('/api/signup', {email, password})
@@ -38,6 +36,12 @@ export class AuthService {
 
     login(email:string, password:string ) {
         return this.http.post<User>('/api/login', {email, password})
+            .shareReplay()
+            .do(user => this.subject.next(user));
+    }
+
+    loginAsUser(email:string) {
+        return this.http.post<User>('/api/admin', {email})
             .shareReplay()
             .do(user => this.subject.next(user));
     }

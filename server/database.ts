@@ -29,7 +29,8 @@ class InMemoryDatabase {
         const user: DbUser = {
             id,
             email,
-            passwordDigest
+            passwordDigest,
+            roles: ["READ:LESSONS"]
         };
 
         USERS[id] = user;

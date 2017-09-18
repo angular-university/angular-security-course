@@ -21,6 +21,7 @@ import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/catch';
 
 import 'rxjs/add/observable/of';
+import { AdminComponent } from './admin/admin.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import 'rxjs/add/observable/of';
     AppComponent,
     LessonsComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
