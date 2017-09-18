@@ -18,7 +18,7 @@ export class AdminComponent {
         private router: Router) {
 
         this.form = this.fb.group({
-            userEmail: ['user@gmail.com',Validators.required]
+            userEmail: ['student@gmail.com',Validators.required]
         });
     }
 
@@ -28,10 +28,10 @@ export class AdminComponent {
         const val = this.form.value;
 
         if (val.userEmail) {
-            this.authService.loginAsUser(val.email)
+            this.authService.loginAsUser(val.userEmail)
                 .subscribe(
-                    () => {
-                        console.log("Logged in as user with email " + val.email);
+                    user => {
+                        console.log("Logged in as user with email " + user.email);
                         this.router.navigateByUrl('/');
                     }
                 );
