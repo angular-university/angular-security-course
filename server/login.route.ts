@@ -42,7 +42,7 @@ async function loginAndBuildResponse(credentials:any, user:DbUser,  res: Respons
     }
     catch(err) {
 
-        console.log("Login failed!");
+        console.log("Login failed:", err);
         res.sendStatus(403);
 
     }

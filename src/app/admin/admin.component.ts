@@ -27,7 +27,7 @@ export class AdminComponent {
 
         const val = this.form.value;
 
-        if (val.email) {
+        if (val.userEmail) {
             this.authService.loginAsUser(val.email)
                 .subscribe(
                     () => {

@@ -21,7 +21,10 @@ export function createUser(req: Request, res:Response) {
     else {
 
         createUserAndSession(res, credentials)
-            .catch(() => {res.sendStatus(500)});
+            .catch((err) => {
+            console.log("Error creating new user", err);
+            res.sendStatus(500);
+        });
 
     }
 
@@ -33,7 +36,7 @@ async function createUserAndSession(res:Response, credentials) {
 
     const user = db.createUser(credentials.email, passwordDigest);
 
-    const sessionToken = await createSessionToken(user.id.toString());
+    const sessionToken = await createSessionToken(user);
 
     const csrfToken = await createCsrfToken();
 

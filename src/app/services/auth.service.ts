@@ -24,6 +24,7 @@ export class AuthService {
 
     constructor(private http: HttpClient) {
         http.get<User>('/api/user')
+            .do(console.log)
             .subscribe(user => this.subject.next(user ? user : ANONYMOUS_USER));
     }
 

@@ -5,18 +5,18 @@ export const USERS: { [key: number]: DbUser } = {
         id: 1,
         email: 'admin@gmail.com',
         // ADMIN user (password is Password10) can read all lessons and also can login on behalf of other users
-        passwordDigest: '$argon2i$v=19$m=4096,t=3,p=1$PcKtsL4a6+xuPbMCKPep7A$rrFO2lKZcAVguIMaSGaf3hMrKtb6wUG4zN/wDG+xNts',
+        passwordDigest: '$argon2i$v=19$m=4096,t=3,p=1$vfrhde0OMBNSSE9rRWtVrQ$gBaNgJFPBZfzuvrzfX8iSr2+OCD8K8Iu/JjwpYp8/TY',
         roles: {
-            'READ:LESSONS': true
+            'STUDENT': true
         }
     },
     2: {
-        id: 1,
+        id: 2,
         email: 'user@gmail.com',
         // normal user (password is Password10), does not have access to login as another user functionality
-        passwordDigest: '$argon2i$v=19$m=4096,t=3,p=1$PcKtsL4a6+xuPbMCKPep7A$rrFO2lKZcAVguIMaSGaf3hMrKtb6wUG4zN/wDG+xNts',
+        passwordDigest: '$argon2i$v=19$m=4096,t=3,p=1$vfrhde0OMBNSSE9rRWtVrQ$gBaNgJFPBZfzuvrzfX8iSr2+OCD8K8Iu/JjwpYp8/TY',
         roles: {
-            'READ:LESSONS': true,
+            'STUDENT': true,
             'ADMIN': true
         }
     }

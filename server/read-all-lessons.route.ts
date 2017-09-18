@@ -4,12 +4,12 @@ import {db} from "./database";
 
 export function readAllLessons(req, res) {
 
-    const userRoles = req["user"].roles;
+    const user = req["user"];
 
-    if (userRoles && userRoles['READ:LESSONS']) {
+    if (user.isStudent) {
         res.status(200).json({lessons:db.readAllLessons()});
     }
     else {
-        res.SendStatus(403);
+        res.sendStatus(403);
     }
 }
