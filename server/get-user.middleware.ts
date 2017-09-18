@@ -29,7 +29,7 @@ async function handleSessionCookie(jwt:string, req: Request) {
 
         const payload = await decodeJwt(jwt);
 
-        req["userId"] = payload.sub;
+        req["user"] = payload;
 
     }
     catch(err) {

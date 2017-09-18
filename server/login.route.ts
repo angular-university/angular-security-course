@@ -43,8 +43,8 @@ async function loginAndBuildResponse(credentials:any, user:DbUser,  res: Respons
     catch(err) {
 
         console.log("Login failed!");
-
         res.sendStatus(403);
+
     }
 }
 
@@ -58,7 +58,7 @@ async function attemptLogin(credentials:any, user:DbUser) {
         throw new Error("Password Invalid");
     }
 
-    return createSessionToken(user.id.toString());
+    return createSessionToken(user);
 }
 
 

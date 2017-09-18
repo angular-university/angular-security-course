@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../services/auth.service";
 import {Router} from "@angular/router";
@@ -6,13 +6,16 @@ import {Router} from "@angular/router";
 @Component({
   selector: 'admin',
   templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.css', '../common/forms.css']
+  styleUrls: [ '../common/forms.css']
 })
 export class AdminComponent {
 
     form:FormGroup;
 
-    constructor(private fb:FormBuilder, private authService: AuthService, private router: Router) {
+    constructor(
+        private fb:FormBuilder,
+        private authService: AuthService,
+        private router: Router) {
 
         this.form = this.fb.group({
             userEmail: ['user@gmail.com',Validators.required]
@@ -24,8 +27,7 @@ export class AdminComponent {
 
         const val = this.form.value;
 
-        if (val.email && val.password) {
-
+        if (val.email) {
             this.authService.loginAsUser(val.email)
                 .subscribe(
                     () => {
@@ -33,10 +35,7 @@ export class AdminComponent {
                         this.router.navigateByUrl('/');
                     }
                 );
-
         }
-
-
     }
 
 }

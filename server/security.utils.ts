@@ -7,6 +7,7 @@ const crypto = require('crypto');
 import * as jwt from 'jsonwebtoken';
 import * as fs from "fs";
 import * as argon2 from 'argon2';
+import {DbUser} from "./db-user";
 
 
 export const randomBytes = util.promisify(crypto.randomBytes);
@@ -21,11 +22,12 @@ const RSA_PUBLIC_KEY = fs.readFileSync('./demos/public.key');
 const SESSION_DURATION = 1000;
 
 
-export async function createSessionToken(userId:string) {
+export async function createSessionToken(user: DbUser) {
     return signJwt({}, RSA_PRIVATE_KEY, {
         algorithm: 'RS256',
         expiresIn: 240,
-        subject: userId
+        subject: user.id,
+        roles: user.roles
     });
 }
 
