@@ -15,7 +15,6 @@ export class AuthorizationGuard implements CanActivate {
                 state:RouterStateSnapshot):Observable<boolean> {
 
         return this.authService.user$
-            .do(user => console.log(user, this.allowedRoles, _.intersection(user.roles, this.allowedRoles)))
             .map(user => _.intersection(user.roles, this.allowedRoles).length > 0)
             .first()
             .do(allowed => {

@@ -23,6 +23,7 @@ import 'rxjs/add/observable/of';
 import { AdminComponent } from './admin/admin.component';
 import {AuthorizationGuard} from "./services/auth.guard";
 import {Router, RouterModule} from "@angular/router";
+import {RbacAllow} from "./common/rbac-allow.directive";
 
 
 
@@ -34,7 +35,8 @@ import {Router, RouterModule} from "@angular/router";
     LessonsComponent,
     LoginComponent,
     SignupComponent,
-    AdminComponent
+    AdminComponent,
+    RbacAllow
   ],
   imports: [
     BrowserModule,

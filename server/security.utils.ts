@@ -28,7 +28,7 @@ export async function createSessionToken(user: DbUser) {
         },
         RSA_PRIVATE_KEY, {
         algorithm: 'RS256',
-        expiresIn: 240,
+        expiresIn: 7200,
         subject: user.id.toString()
     });
 }
