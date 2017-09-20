@@ -9,7 +9,7 @@
         <li>
             <a routerLink="/lessons">Lessons</a>
         </li>
-        <li *rbacAllow="['ADMIN']">
+        <li>
             <a routerLink="/admin">Admin</a>
         </li>
         <li *ngIf="isLoggedOut$ | async">

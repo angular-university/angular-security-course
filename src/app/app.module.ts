@@ -11,6 +11,9 @@ import {LessonsService} from "./services/lessons.service";
 import {ReactiveFormsModule} from "@angular/forms";
 
 import {AuthService} from "./services/auth.service";
+import { AdminComponent } from './admin/admin.component';
+import { RouterModule} from "@angular/router";
+
 
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/map';
@@ -20,11 +23,6 @@ import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/first';
 import 'rxjs/add/observable/of';
-import { AdminComponent } from './admin/admin.component';
-import {AuthorizationGuard} from "./services/auth.guard";
-import {Router, RouterModule} from "@angular/router";
-import {RbacAllow} from "./common/rbac-allow.directive";
-
 
 
 
@@ -35,8 +33,7 @@ import {RbacAllow} from "./common/rbac-allow.directive";
     LessonsComponent,
     LoginComponent,
     SignupComponent,
-    AdminComponent,
-    RbacAllow
+    AdminComponent
   ],
   imports: [
     BrowserModule,
@@ -49,15 +46,6 @@ import {RbacAllow} from "./common/rbac-allow.directive";
       ReactiveFormsModule
   ],
   providers: [
-      {
-          provide: 'adminsOnlyGuard',
-          useFactory: (authService:AuthService,
-                       router:Router) => new AuthorizationGuard(['ADMIN'], authService, router),
-          deps: [
-              AuthService,
-              Router
-          ]
-      },
       LessonsService,
       AuthService
   ],

@@ -19,8 +19,7 @@ export const routesConfig: Routes = [
     },
     {
         path: 'admin',
-        component: AdminComponent,
-        canActivate: ["adminsOnlyGuard"]
+        component: AdminComponent
     },
     {
         path: '',
