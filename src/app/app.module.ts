@@ -1,12 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {NgModule, Provider} from '@angular/core';
 import {HttpClientModule, HttpClientXsrfModule} from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { LessonsComponent } from './lessons/lessons.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
-import {RouterModule} from "@angular/router";
 import {routesConfig} from "./routes.config";
 import {LessonsService} from "./services/lessons.service";
 import {ReactiveFormsModule} from "@angular/forms";
@@ -19,9 +18,14 @@ import 'rxjs/add/operator/shareReplay';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/catch';
-
+import 'rxjs/add/operator/first';
 import 'rxjs/add/observable/of';
 import { AdminComponent } from './admin/admin.component';
+import {AuthorizationGuard} from "./services/auth.guard";
+import {Router, RouterModule} from "@angular/router";
+
+
+
 
 
 @NgModule({
@@ -42,7 +46,19 @@ import { AdminComponent } from './admin/admin.component';
       RouterModule.forRoot(routesConfig),
       ReactiveFormsModule
   ],
-  providers: [LessonsService, AuthService],
+  providers: [
+      {
+          provide: 'adminsOnlyGuard',
+          useFactory: (authService:AuthService,
+                       router:Router) => new AuthorizationGuard(['ADMIN'], authService, router),
+          deps: [
+              AuthService,
+              Router
+          ]
+      },
+      LessonsService,
+      AuthService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

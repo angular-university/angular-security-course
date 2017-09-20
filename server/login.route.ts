@@ -37,7 +37,7 @@ async function loginAndBuildResponse(credentials:any, user:DbUser,  res: Respons
 
         res.cookie("XSRF-TOKEN", csrfToken);
 
-        res.status(200).json({id:user.id, email:user.email});
+        res.status(200).json({id:user.id, email:user.email, roles: user.roles});
 
     }
     catch(err) {

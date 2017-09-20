@@ -30,9 +30,7 @@ class InMemoryDatabase {
             id,
             email,
             passwordDigest,
-            roles: {
-                "STUDENT":true
-            }
+            roles: ["STUDENT"]
         };
 
         USERS[id] = user;
