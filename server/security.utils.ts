@@ -23,9 +23,7 @@ const SESSION_DURATION = 1000;
 
 
 export async function createSessionToken(user: DbUser) {
-    return signJwt({
-            roles: user.roles
-        },
+    return signJwt({},
         RSA_PRIVATE_KEY, {
         algorithm: 'RS256',
         expiresIn: 7200,
