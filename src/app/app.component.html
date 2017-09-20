@@ -31,7 +31,12 @@
         <img class="course-logo"
              src="https://s3-us-west-1.amazonaws.com/angular-university/course-images/angular-security-thumbnail.png">
 
-        <div *ngIf="(user$ | async) as user">User: {{user.email}}</div>
+        <ng-container *ngIf="(user$ | async) as user">
+
+            <h4 class="user-email" *ngIf="user.email">{{user.email}}</h4>
+
+        </ng-container>
+
     </div>
 
     <router-outlet></router-outlet>

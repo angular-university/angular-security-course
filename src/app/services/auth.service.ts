@@ -6,7 +6,7 @@ import {BehaviorSubject} from "rxjs/BehaviorSubject";
 
 export const ANONYMOUS_USER: User = {
     id: undefined,
-    email: '',
+    email: undefined,
     roles: []
 }
 
