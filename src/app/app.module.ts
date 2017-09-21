@@ -12,7 +12,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 
 import {AuthService} from "./services/auth.service";
 import {AdminComponent} from './admin/admin.component';
-import {RouterModule} from "@angular/router";
+import {Router, RouterModule} from "@angular/router";
 
 
 import 'rxjs/add/operator/switchMap';
@@ -24,6 +24,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/first';
 import 'rxjs/add/observable/of';
 import {RbacAllowDirective} from "./common/rbac-allow.directive";
+import {AuthorizationGuard} from "./services/authorization.guard";
 
 
 @NgModule({
@@ -47,7 +48,18 @@ import {RbacAllowDirective} from "./common/rbac-allow.directive";
     ],
     providers: [
         LessonsService,
-        AuthService
+        AuthService,
+        {
+            provide: 'adminsOnlyGuard',
+            useFactory: (authService:AuthService,
+                         router:Router) =>
+                 new AuthorizationGuard(['ADMIN'], authService, router),
+            deps: [
+                AuthService,
+                Router
+            ]
+
+        }
     ],
     bootstrap: [AppComponent]
 })
