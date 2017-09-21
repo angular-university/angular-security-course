@@ -13,7 +13,8 @@ export class LessonsComponent implements OnInit {
 
     lessons$: Observable<Lesson[]>;
 
-    constructor(private lessonsService: LessonsService, private sanitizer: DomSanitizer) {
+    constructor(private lessonsService: LessonsService,
+                private sanitizer: DomSanitizer) {
 
     }
 
@@ -21,10 +22,6 @@ export class LessonsComponent implements OnInit {
     ngOnInit() {
         this.lessons$ = this.lessonsService.loadAllLessons()
             .catch(err => Observable.of([]));
-    }
-
-    safeHtml(unsafeHtml:string) {
-        return this.sanitizer.bypassSecurityTrustHtml(unsafeHtml);
     }
 
     safeResourceUrl(unsafeResourceUrl) {

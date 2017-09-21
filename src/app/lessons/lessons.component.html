@@ -6,7 +6,22 @@
 
         <h3>{{lesson.description}}</h3>
 
-        <div [innerHtml]="safeHtml(lesson.longDescription)"></div>
+        <p>
+            <ng-container *ngFor="let fragment of lesson.longDescription">
+
+                <ng-container [ngSwitch]="fragment.type">
+
+                    <ng-container *ngSwitchDefault>{{fragment.text}}</ng-container>
+
+                    <b *ngSwitchCase="'BOLD'">{{fragment.text}}</b>
+
+                    <i *ngSwitchCase="'ITALIC'">{{fragment.text}}</i>
+
+                </ng-container>
+
+            </ng-container>
+        </p>
+
 
         <iframe class="lesson-video" [src]="safeResourceUrl(lesson.videoUrl)"></iframe>
 

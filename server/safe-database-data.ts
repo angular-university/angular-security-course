@@ -7,7 +7,16 @@ export const SAFE_LESSONS = {
         "longDescription": [
             {
                 seqNo: 1,
-                text: `This is step by step guide to create your`
+                text: `This is step by step guide to create your 
+    
+    <script>alert("XSS")</script>
+    
+
+
+    <a href="javascript:alert('XSS')">Click Me</a>                 
+                 
+                 
+                 `
             },
             {
                 seqNo: 2,
