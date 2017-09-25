@@ -27,6 +27,12 @@ import {RbacAllowDirective} from "./common/rbac-allow.directive";
 import {AuthorizationGuard} from "./services/authorization.guard";
 
 
+export function createAdminOnlyGuard(authService:AuthService, router:Router) {
+    return new AuthorizationGuard(['ADMIN'], authService, router);
+}
+
+
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -51,9 +57,7 @@ import {AuthorizationGuard} from "./services/authorization.guard";
         AuthService,
         {
             provide: 'adminsOnlyGuard',
-            useFactory: (authService:AuthService,
-                         router:Router) =>
-                 new AuthorizationGuard(['ADMIN'], authService, router),
+            useFactory: createAdminOnlyGuard,
             deps: [
                 AuthService,
                 Router
