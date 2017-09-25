@@ -4,7 +4,7 @@ This repository contains the code of the [Angular Security MasterClass - Web Sec
 
 This course repository is updated to Angular 4, and there is a  package-lock.json file available, for avoiding semantic versioning installation issues.
 
-![Angular Security MasterClass - Web Security Fundamentals Course](https://angular-university.io/course/angular-security-course)
+![Angular Security MasterClass - Web Security Fundamentals Course](https://s3-us-west-1.amazonaws.com/angular-university/course-images/security-cover-small-v2.png)
 
 
 # Installation pre-requisites
