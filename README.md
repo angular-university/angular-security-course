@@ -1,9 +1,11 @@
 ## Angular Security MasterClass - Web Security Fundamentals Course
 
-This course is currently ongoing development, please make sure to checkout the branch 
-mentioned at the beginning of each course section.
+This repository contains the code of the [Angular Security MasterClass - Web Security Fundamentals Course](https://angular-university.io/course/angular-security-course).
 
-In the end this master branch will contain the complete code of the course.
+This course repository is updated to Angular 4, and there is a  package-lock.json file available, for avoiding semantic versioning installation issues.
+
+![Angular Security MasterClass - Web Security Fundamentals Course](https://angular-university.io/course/angular-security-course)
+
 
 # Installation pre-requisites
 
