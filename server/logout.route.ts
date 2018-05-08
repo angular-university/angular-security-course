@@ -8,5 +8,5 @@ export function logout(req: Request, res: Response) {
 
     res.clearCookie("SESSIONID");
 
-    res.sendStatus(200);
+    res.status(200).json({message: 'Logout Successful'});
 }
