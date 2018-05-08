@@ -1,8 +1,9 @@
+
+import {filter} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs/Observable";
+import {Observable, BehaviorSubject} from "rxjs";
 import {User} from "../model/user";
-import {BehaviorSubject} from "rxjs/BehaviorSubject";
 import * as auth0 from 'auth0-js';
 import {Router} from "@angular/router";
 
@@ -29,7 +30,7 @@ export class AuthService {
 
     private userSubject = new BehaviorSubject<User>(undefined);
 
-    user$: Observable<User> = this.userSubject.asObservable().filter(user => !!user);
+    user$: Observable<User> = this.userSubject.asObservable().pipe(filter(user => !!user));
 
     constructor(private http: HttpClient, private router: Router) {
 
