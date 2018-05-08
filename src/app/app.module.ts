@@ -11,7 +11,7 @@ import {routesConfig} from "./routes.config";
 import {LessonsService} from "./services/lessons.service";
 import {ReactiveFormsModule} from "@angular/forms";
 
-import 'rxjs/add/operator/switchMap';
+
 
 @NgModule({
   declarations: [
