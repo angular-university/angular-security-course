@@ -4,7 +4,7 @@
 import {Directive, Input, OnDestroy, TemplateRef, ViewContainerRef} from "@angular/core";
 import {AuthService} from "../services/auth.service";
 import {User} from "../model/user";
-import {Subscription} from "rxjs/Subscription";
+import {Subscription} from "rxjs";
 import * as _ from 'lodash';
 
 @Directive({
