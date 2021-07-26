@@ -36,7 +36,7 @@
     "@angular/router": "7.0.0",
     "@types/express": "^4.0.36",
     "@types/lodash": "^4.14.70",
-    "argon2": "^0.16.1",
+    "argon2": "^0.28.2",
     "body-parser": "^1.17.2",
     "command-line-args": "^4.0.6",
     "cookie-parser": "^1.4.3",
