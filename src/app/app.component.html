@@ -9,14 +9,14 @@
     <li>
       <a routerLink="/lessons">Lessons</a>
     </li>
-    <li>
+    <li *ngIf="isLoggedOut$ | async">
       <a routerLink="/signup">Sign Up</a>
 
     </li>
-    <li>
+    <li *ngIf="isLoggedOut$ |async">
       <a routerLink="/login">Login</a>
     </li>
-    <li>
+    <li *ngIf="isLoggedIn$ | async">
       <a>Logout</a>
     </li>
   </ul>
