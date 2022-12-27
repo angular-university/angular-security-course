@@ -1,13 +1,28 @@
-
 import * as _ from 'lodash';
-import {LESSONS} from "./database-data";
+import {LESSONS, USERS} from './database-data';
+import {DbUser} from './db-user';
 
 
 class InMemoryDatabase {
 
-    readAllLessons() {
-        return _.values(LESSONS);
-    }
+  userCount = 0;
+
+  readAllLessons() {
+    return _.values(LESSONS);
+  }
+
+  createUser(email: string, password: string) {
+    const id = ++this.userCount;
+
+    const user: DbUser = {
+      id,
+      email,
+      password
+    };
+
+    USERS[id] = user;
+    return user;
+  }
 
 
 }

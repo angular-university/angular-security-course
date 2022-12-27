@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../services/auth.service';
+import {User} from '../model/user';
 
 @Component({
   selector: 'app-signup',
@@ -33,7 +34,7 @@ export class SignupComponent implements OnInit {
     if (val.email && val.password && val.password === val.confirm) {
       this.authService.signUp(val.email, val.password)
         .subscribe({
-          next: () => console.log('user created successfully !'), error: (e: Error) => {
+          next: (user: User) => console.log('user created successfully !', JSON.stringify(user)), error: (e: Error) => {
             console.log(e.message);
           }
         });
