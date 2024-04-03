@@ -65,6 +65,11 @@ We can checkout the remote branch and start tracking it with a local branch that
 
 # Other Courses
 
+# Modern Angular With Signals
+
+If you are looking for the [Modern Angular With Signals Course](https://angular-university.io/course/angular-signals-course), the repo with the full code can be found here:
+
+![Modern Angular With Signals Course](https://d3vigmphadbn9b.cloudfront.net/course-images/large-images/angular-signals-course.jpg)
 
 # Angular Advanced Library Laboratory Course
 
