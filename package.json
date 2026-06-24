@@ -42,7 +42,7 @@
     "cookie-parser": "^1.4.3",
     "core-js": "^2.4.1",
     "http-server": "^0.10.0",
-    "jsonwebtoken": "^7.4.2",
+    "jsonwebtoken": "^9.0.0",
     "moment": "^2.18.1",
     "nodemon": "^1.11.0",
     "password-validator": "^4.0.0",
